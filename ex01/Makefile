@@ -3,8 +3,8 @@ CXX = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -pedantic
 
 # Source files and target
-SRCS = PhoneBook.cpp
-TARGET = megaphone
+SRCS = PhoneBook.cpp Contact.cpp main.cpp
+TARGET = phonebook
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)

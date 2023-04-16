@@ -1,41 +1,67 @@
-#include "Contact.hpp"
 #include "PhoneBook.hpp"
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <cstdlib>
+#include <iomanip>
 
 
-
-int main()
+std::string truncate(std::string str, int length)
 {
-	PhoneBook phoneBook;
-	int choice;
-	
-	do
+	if (str.length() > length)
 	{
-		std::cout << "ADD - Add an entry to the phone book" << std::endl;
-		std::cout << "SEARCH - Show the information of the contact" << std::endl;
-		std::cout << "Exit" << std::endl;
-		std::cout << "Enter your choice: ";
-		std::cin >> choice;
-			
-		switch(choice)
-		{
-			case ADD:
-				phoneBook.addEntry();
-				break;
-			case SEARCH:
-				phoneBook.printEntry();
-				break;
-			case EXIT:
-				std::cout << "Goodbye!" << std::endl;
-				break;
-			default:
-				std::cout << "Invalid choice. Please try again." << std::endl;
-				break;
-		}
-	} while (choice != 7);
+		return str.substr(0, length - 1) + ".";
+	}
+	else
+	{
+		return str;
+	}
+}
 
-	return 0;
+void PhoneBook::addContact(Contact &contact)
+{
+	if (this->numContacts < 8)
+	{
+		contacts[numContacts] = contact;
+		numContacts++;
+	}
+	else
+	{
+		for (int i = 1; i < this->numContacts; i++)
+		{
+			contacts[i - 1] = contacts[i];
+		}
+		contacts[this->numContacts - 1] = contact;
+	}
+}
+
+int PhoneBook::getNumContacts()
+{
+	return this->numContacts;
+}
+
+Contact PhoneBook::getContact(int index)
+{
+	if (index >= 0 && index < this->numContacts)
+	{
+		return this->contacts[index];
+	}
+	else
+	{
+		return Contact();
+	}
+}
+
+void PhoneBook::displayContacts()
+{
+	std::cout << std::setw(10) << std::right << "Index" << " | ";
+	std::cout << std::setw(10) << std::right << "First Name" << " | ";
+	std::cout << std::setw(10) << std::right << "Last Name" << " | ";
+	std::cout << std::setw(10) << std::right << "Nickname" << std::endl;
+
+	for (int i = 0; i < this->numContacts; i++)
+	{
+		std::cout << std::setw(10) << std::right << i << " | ";
+		std::cout << std::setw(10) << std::right << truncate(contacts[i].getFirstName(), 10) << " | ";
+		std::cout << std::setw(10) << std::right << truncate(contacts[i].getLastName(), 10) << " | ";
+		std::cout << std::setw(10) << std::right << truncate(contacts[i].getNickname(), 10) << " | ";
+	}
 }

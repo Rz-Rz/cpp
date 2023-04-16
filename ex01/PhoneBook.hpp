@@ -1,18 +1,24 @@
+#ifndef PHONEBOOK_HPP
+#define PHONEBOOK_HPP
+
+#include <iostream>
+#include <string>
+#include <array>
 #include "Contact.hpp"
+
 
 class PhoneBook 
 {
 	public:
-		PhoneBook();
-		void addEntry();
-		void printAllEntries();
-		void printEntry();
-		void removeEntry();
-		void saveToFile();
-		void loadFromFile();
+		PhoneBook() : numContacts(0) {};
+		void addContact(Contact &contact);
+		int getNumContacts();
+		Contact getContact(int index);
+		void displayContacts();
 		
 	private:
-		Contact *contact;
-		int numEntries;
-		int maxEntries;
-}
+		std::array<Contact, 8> contacts;
+		int numContacts;
+};
+
+#endif
