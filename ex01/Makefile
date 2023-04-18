@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = c++
-CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -pedantic
+CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 
 # Source files and target
 SRCS = PhoneBook.cpp Contact.cpp main.cpp

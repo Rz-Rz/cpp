@@ -1,6 +1,8 @@
 #include <string>
+#include <sstream>
 #include <limits>
 #include "PhoneBook.hpp"
+#include "Contact.hpp"
 
 
 int main()
@@ -40,9 +42,15 @@ int main()
 			phoneBook.displayContacts();
 
 			std::cout << "Enter index of contact to display: ";
+			std::string input;
+			std::getline(std::cin, input);
+			std::stringstream ss(input);
 			int index;
-			std::cin >> index;
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			if (!(ss >> index))
+			{
+				std::cout << "Invalid input" << std::endl;
+				continue;
+			}
 			if (index < 0 || index >= phoneBook.getNumContacts())
 			{
 				std::cout << "Invalid index" << std::endl;

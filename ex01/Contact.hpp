@@ -19,7 +19,7 @@ class Contact
 		std::string getNickname();
 		std::string getDarkestSecret();
 		void printContact();
-		
+
 	private:
 		std::string firstName;
 		std::string lastName;

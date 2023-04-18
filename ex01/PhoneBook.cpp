@@ -1,10 +1,11 @@
 #include "PhoneBook.hpp"
+#include "Contact.hpp"
 #include <iostream>
 #include <string>
 #include <iomanip>
 
 
-std::string truncate(std::string str, int length)
+std::string truncate(std::string str, std::string::size_type length)
 {
 	if (str.length() > length)
 	{
@@ -20,16 +21,16 @@ void PhoneBook::addContact(Contact &contact)
 {
 	if (this->numContacts < 8)
 	{
-		contacts[numContacts] = contact;
-		numContacts++;
+		this->contacts[numContacts] = contact;
+		this->numContacts++;
 	}
 	else
 	{
 		for (int i = 1; i < this->numContacts; i++)
 		{
-			contacts[i - 1] = contacts[i];
+			this->contacts[i - 1] = this->contacts[i];
 		}
-		contacts[this->numContacts - 1] = contact;
+		this->contacts[this->numContacts - 1] = contact;
 	}
 }
 
@@ -63,5 +64,6 @@ void PhoneBook::displayContacts()
 		std::cout << std::setw(10) << std::right << truncate(contacts[i].getFirstName(), 10) << " | ";
 		std::cout << std::setw(10) << std::right << truncate(contacts[i].getLastName(), 10) << " | ";
 		std::cout << std::setw(10) << std::right << truncate(contacts[i].getNickname(), 10) << " | ";
+		std::cout << std::endl;
 	}
 }

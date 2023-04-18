@@ -3,11 +3,10 @@
 
 #include <iostream>
 #include <string>
-#include <array>
 #include "Contact.hpp"
 
 
-class PhoneBook 
+class PhoneBook
 {
 	public:
 		PhoneBook() : numContacts(0) {};
@@ -15,9 +14,9 @@ class PhoneBook
 		int getNumContacts();
 		Contact getContact(int index);
 		void displayContacts();
-		
+
 	private:
-		std::array<Contact, 8> contacts;
+		Contact contacts[8];
 		int numContacts;
 };
 
