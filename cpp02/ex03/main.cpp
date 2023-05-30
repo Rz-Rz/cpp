@@ -1,5 +1,8 @@
 #include <iostream>
+#include "Point.hpp"
 #include "Fixed.hpp"
+#include <cassert>
+#include <sstream>
 
 int main( void ) {
 	/* Fixed a; */
@@ -40,7 +43,7 @@ int main( void ) {
 
 	/* // Increment/decrement operators */
 	/* ++a; */
-	/* std::cout << a.toFloat() <<  " a was incremented, should give a > 5" << std::endl; */ 
+	/* std::cout << a.toFloat() <<  " a was incremented, should give a > 5" << std::endl; */
 
 	/* Fixed g = b++; */
 	/* std::cout << g.toFloat() << " post increment on b should give same number 7" << std::endl;  // Output: 7 */
@@ -62,14 +65,34 @@ int main( void ) {
     /* Fixed minVal = Fixed::min(a, b); */
 	/* std::cout << minVal << " min val between a and b" << std::endl; */
 
-	Fixed a;
-	Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
-	std::cout << a << std::endl;
-	std::cout << ++a << std::endl;
-	std::cout << a << std::endl;
-	std::cout << a++ << std::endl;
-	std::cout << a << std::endl;
-	std::cout << b << std::endl;
-	std::cout << Fixed::max( a, b ) << std::endl;
+    // Test default constructor
+    Point p1;
+    assert(p1.getX() == 0.0f);
+    assert(p1.getY() == 0.0f);
+
+    // Test constructor with parameters
+    Point p2(1.0f, 2.0f);
+    assert(p2.getX() == 1.0f);
+    assert(p2.getY() == 2.0f);
+
+    // Test copy constructor
+    Point p3(p2);
+	std::cout << "p3" << p3 << std::endl;
+	std::cout << "p2" << p2 << std::endl;
+    assert(p3.getX() == p2.getX());
+    assert(p3.getY() == p2.getY());
+
+    // Test assignment operator
+    p1 = p2;
+	std::cout << "p1 has been assigned p2" << p1 << std::endl;
+	std::cout <<  "p2" << p2 << std::endl;
+    assert(p1.getX() == p2.getX());
+    assert(p1.getY() == p2.getY());
+
+    // Test output operator
+    std::ostringstream os;
+    os << p1;
+    assert(os.str() == "Point(1, 2)");
+
 	return 0;
 }
