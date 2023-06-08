@@ -66,33 +66,53 @@ int main( void ) {
 	/* std::cout << minVal << " min val between a and b" << std::endl; */
 
     // Test default constructor
-    Point p1;
-    assert(p1.getX() == 0.0f);
-    assert(p1.getY() == 0.0f);
+    /* Point p1; */
+    /* assert(p1.getX() == 0.0f); */
+    /* assert(p1.getY() == 0.0f); */
 
-    // Test constructor with parameters
-    Point p2(1.0f, 2.0f);
-    assert(p2.getX() == 1.0f);
-    assert(p2.getY() == 2.0f);
+    /* // Test constructor with parameters */
+    /* Point p2(1.0f, 2.0f); */
+    /* assert(p2.getX() == 1.0f); */
+    /* assert(p2.getY() == 2.0f); */
 
-    // Test copy constructor
-    Point p3(p2);
-	std::cout << "p3" << p3 << std::endl;
-	std::cout << "p2" << p2 << std::endl;
-    assert(p3.getX() == p2.getX());
-    assert(p3.getY() == p2.getY());
+    /* // Test copy constructor */
+    /* Point p3(p2); */
+	/* std::cout << "p3" << p3 << std::endl; */
+	/* std::cout << "p2" << p2 << std::endl; */
+    /* assert(p3.getX() == p2.getX()); */
+    /* assert(p3.getY() == p2.getY()); */
 
-    // Test assignment operator
-    p1 = p2;
-	std::cout << "p1 has been assigned p2" << p1 << std::endl;
-	std::cout <<  "p2" << p2 << std::endl;
-    assert(p1.getX() == p2.getX());
-    assert(p1.getY() == p2.getY());
+    /* // Test assignment operator */
+    /* p1 = p2; */
+	/* std::cout << "p1 has been assigned p2" << p1 << std::endl; */
+	/* std::cout <<  "p2" << p2 << std::endl; */
+    /* assert(p1.getX() == p2.getX()); */
+    /* assert(p1.getY() == p2.getY()); */
 
-    // Test output operator
-    std::ostringstream os;
-    os << p1;
-    assert(os.str() == "Point(1, 2)");
+    /* // Test output operator */
+    /* std::ostringstream os; */
+    /* os << p1; */
+    /* assert(os.str() == "Point(1, 2)"); */
+
+	 // Test 1: Point is inside the triangle
+    Point a1(0, 0), b1(5, 0), c1(2, 5), p1(2, 2);
+    assert(bsp(a1, b1, c1, p1) == true);
+	std::cout << "Test 1 passed" << std::endl;
+
+    // Test 2: Point is outside the triangle
+    Point a2(0, 0), b2(5, 0), c2(2, 5), p2(6, 6);
+    assert(bsp(a2, b2, c2, p2) == false);
+	std::cout << "Test 2 passed" << std::endl;
+
+    // Test 3: Point is on the vertex of the triangle
+    Point a3(0, 0), b3(5, 0), c3(2, 5), p3(0, 0);
+    assert(bsp(a3, b3, c3, p3) == false);
+	std::cout << "Test 3 passed" << std::endl;
+
+    // Test 4: Point is on the edge of the triangle
+    Point a4(0, 0), b4(5, 0), c4(2, 5), p4(2.5, 0);
+    assert(bsp(a4, b4, c4, p4) == false);
+	std::cout << "Test 4 passed" << std::endl;
 
 	return 0;
 }

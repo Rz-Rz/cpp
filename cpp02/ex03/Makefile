@@ -3,7 +3,7 @@ CXX = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 
 # Source files and target
-SRCS = Fixed.cpp main.cpp Point.cpp
+SRCS = Fixed.cpp main.cpp Point.cpp bsp.cpp
 TARGET = fixed
 
 # Object files

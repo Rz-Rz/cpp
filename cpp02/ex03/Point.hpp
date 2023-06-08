@@ -1,5 +1,6 @@
 #include "Fixed.hpp"
 
+
 class Point {
 	public:
 		Point(void);
@@ -20,3 +21,4 @@ class Point {
 		Fixed const _y;
 };
 
+bool bsp( Point const a, Point const b, Point const c, Point const point );
