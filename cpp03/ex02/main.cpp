@@ -1,5 +1,6 @@
 #include "ClapTrap.hpp"
 #include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 #include <iostream>
 
 int main(void)
@@ -37,11 +38,23 @@ int main(void)
 	/* clap2.beRepaired(9); */
 
 	//ex01
-	ScavTrap scav1("SC4V-TP");
-	scav1.getName();
-	std::cout << "ScavTrap has " << scav1.getAttackDamage() << " attack damage points." << std::endl;
-	std::cout << "ScavTrap has " << scav1.getEnergyPoints() << " energy points." << std::endl;
-	scav1.guardGate();
+	/* ScavTrap scav1("SC4V-TP"); */
+	/* scav1.getName(); */
+	/* std::cout << "ScavTrap has " << scav1.getAttackDamage() << " attack damage points." << std::endl; */
+	/* std::cout << "ScavTrap has " << scav1.getEnergyPoints() << " energy points." << std::endl; */
+	/* scav1.guardGate(); */
+
+	//ex02
+	FragTrap frag1("FR4G-TP");
+	frag1.attack("FR4G-TP");
+	frag1.highFivesGuys();
+	std::cout << "FragTrap has " << frag1.getAttackDamage() << " attack damage points." << std::endl;
+	std::cout << "FragTrap has " << frag1.getEnergyPoints() << " energy points." << std::endl;
+	frag1.takeDamage(10);
+	frag1.beRepaired(10);
+	FragTrap frag2 = frag1;
+	frag2.takeDamage(10);
+	frag2.beRepaired(10);
 
     return 0;
 
