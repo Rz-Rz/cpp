@@ -19,3 +19,15 @@ FragTrap::~FragTrap (void) {
 void FragTrap::highFivesGuys() {
 	std::cout << "FragTrap " << getName() << " says: High five!" << std::endl;
 }
+
+FragTrap & FragTrap::operator=(FragTrap const & rhs)
+{
+	std::cout << "FragTrap assignation operator called" << std::endl;
+	if (this != &rhs) {
+		_name = rhs._name;
+		_hitPoints = rhs._hitPoints;
+		_attackDamage = rhs._attackDamage;
+		_energyPoints = rhs._energyPoints;
+	}
+	return *this;
+}

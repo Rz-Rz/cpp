@@ -52,3 +52,15 @@ std::string ClapTrap::getName(void) {
 int ClapTrap::getAttackDamage(void) {
 	return _attackDamage;
 }
+
+ClapTrap::ClapTrap(ClapTrap const & src) : _name(src._name), _hitPoints(src._hitPoints), _attackDamage(src._attackDamage), _energyPoints(src._energyPoints) {
+	std::cout << "ClapTrap " << _name << " is born!" << std::endl;
+}
+
+ClapTrap & ClapTrap::operator=(ClapTrap const & rhs) {
+	_name = rhs._name;
+	_hitPoints = rhs._hitPoints;
+	_attackDamage = rhs._attackDamage;
+	_energyPoints = rhs._energyPoints;
+	return *this;
+}
