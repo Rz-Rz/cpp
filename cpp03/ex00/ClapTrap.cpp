@@ -14,6 +14,20 @@ void ClapTrap::attack(std::string const & target) {
 	_energyPoints -= 1;
 }
 
+ClapTrap::ClapTrap(ClapTrap const & src) : _name(src._name), _hitPoints(src._hitPoints), _attackDamage(src._attackDamage), _energyPoints(src._energyPoints) {
+	std::cout << "ClapTrap " << _name << " is born!" << std::endl;
+}
+
+ClapTrap & ClapTrap::operator=(ClapTrap const & rhs) {
+	if (this != &rhs) {
+		_name = rhs._name;
+		_hitPoints = rhs._hitPoints;
+		_attackDamage = rhs._attackDamage;
+		_energyPoints = rhs._energyPoints;
+	}
+	return *this;
+}
+
 void ClapTrap::beRepaired(unsigned int amount) {
 	if (_energyPoints <= 0) {
 		std::cout << "ClapTrap " << getName() << " is out of energy!" << std::endl;
