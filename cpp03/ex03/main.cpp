@@ -45,16 +45,17 @@ int main(void)
 	/* scav1.guardGate(); */
 
 	//ex02
-	FragTrap frag1("FR4G-TP");
-	frag1.attack("FR4G-TP");
-	frag1.highFivesGuys();
-	std::cout << "FragTrap has " << frag1.getAttackDamage() << " attack damage points." << std::endl;
-	std::cout << "FragTrap has " << frag1.getEnergyPoints() << " energy points." << std::endl;
-	frag1.takeDamage(10);
-	frag1.beRepaired(10);
-	FragTrap frag2 = frag1;
-	frag2.takeDamage(10);
-	frag2.beRepaired(10);
+	/* FragTrap frag1("FR4G-TP"); */
+	/* frag1.attack("FR4G-TP"); */
+	/* frag1.highFivesGuys(); */
+	/* std::cout << "FragTrap has " << frag1.getAttackDamage() << " attack damage points." << std::endl; */
+	/* std::cout << "FragTrap has " << frag1.getEnergyPoints() << " energy points." << std::endl; */
+	/* frag1.takeDamage(10); */
+	/* frag1.beRepaired(10); */
+	/* FragTrap frag2 = frag1; */
+	/* frag2.takeDamage(10); */
+	/* frag2.beRepaired(10); */
+
 
 
     return 0;
