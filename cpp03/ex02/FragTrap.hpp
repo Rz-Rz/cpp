@@ -12,6 +12,11 @@ public:
 
 	FragTrap & operator=(FragTrap const & rhs);
 
+private:
+	std::string _name;
+	int _hitPoints;
+	int _attackDamage;
+	int _energyPoints;
 };
 
 #endif
