@@ -12,6 +12,10 @@ public:
 
 	FragTrap & operator=(FragTrap const & rhs);
 
+protected :
+	int _hitPoints;
+	int _attackDamage;
+	int _energyPoints;
 };
 
 #endif

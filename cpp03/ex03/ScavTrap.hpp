@@ -12,10 +12,5 @@ class ScavTrap : virtual public ClapTrap {
 		void guardGate(void);
 
 		ScavTrap & operator=(ScavTrap const & rhs);
-
-
- 
-
-
 };
 #endif
