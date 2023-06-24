@@ -10,6 +10,8 @@ class Cat : public Animal {
 		Cat(const Cat &other);
 		~Cat();
 		void makeSound() const;
+		void setIdea(int index, std::string idea);
+		std::string getIdea(int index) const;
 
 		Cat &operator=(const Cat &rhs);
 

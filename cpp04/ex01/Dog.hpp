@@ -10,6 +10,8 @@ class Dog : public Animal {
 		Dog(const Dog &other);
 		~Dog();
 		void makeSound() const;
+		void setIdea(int index, std::string idea);
+		std::string getIdea(int index) const;
 
 		Dog &operator=(const Dog &rhs);
 

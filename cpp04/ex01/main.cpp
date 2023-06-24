@@ -33,13 +33,6 @@ int main()
 	/* wrong->makeSound(); */
 	/* wrong2->makeSound(); */
 
-	/* delete meta; */
-	/* delete j; */
-	/* delete i; */
-	/* delete dog; */
-	/* delete dog2; */
-	/* delete wrong; */
-	/* delete wrong2; */
 
 	Animal *animals[10];
 	for (int i = 0; i < 10; i++)
@@ -53,5 +46,21 @@ int main()
 	{
 		delete animals[i];
 	}
+	const Animal* j = new Dog();
+	const Animal* i = new Cat();
+	delete j;//should not create a leak
+	delete i;
+
+	Cat *cat = new Cat();
+	Cat *cat2 = new Cat(*cat);
+	delete cat;
+	delete cat2;
+
+	Cat *cat3 = new Cat();
+	cat3->setIdea(0, "Hello");
+	cat3->setIdea(1, "World");
+	std::cout << cat3->getIdea(0) << std::endl;
+	std::cout << cat3->getIdea(1) << std::endl;
+	delete cat3;
 	return 0;
 }
