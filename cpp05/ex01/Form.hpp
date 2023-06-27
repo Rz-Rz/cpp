@@ -37,4 +37,6 @@ class Form
 		const int			_gradeToSign;
 		const int			_gradeToExecute;
 };
+
+std::ostream &operator<<(std::ostream &out, Form const &form);
 #endif
