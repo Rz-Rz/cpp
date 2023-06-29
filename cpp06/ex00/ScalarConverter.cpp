@@ -1,40 +1,20 @@
 #include "ScalarConverter.hpp"
 #include <iostream>
 
-ScalarConvert::ScalarConvert(std::string str) : _str(str) {
-	return;
-}
-
-ScalarConvert::~ScalarConvert() {
-	return;
-}
-
-ScalarConvert::ScalarConvert(ScalarConvert const &other) {
-	*this = other;
-}
-
-ScalarConvert &ScalarConvert::operator=(ScalarConvert const &other) {
-	if (this != &other) {
-		this->_str = other._str;
-	}
-	return *this;
-}
-
-bool is_literal(std::string const &input)
+void ScalarConvert::convert(std::string const &literal)
 {
-	std::string literals[6] = {"nan", "nanf", "-inf", "+inf", "+inff", "-inff"};
-	for (int i = 0; i < 6; i++)
+	if (literal == "-inff" || literal == "+inff" || literal == "nanf")
 	{
-		if (input == literals[i])
-		{
-			return true;
-		}
+		handleFloatPseudoLiteral(literal);
 	}
-	return false;
 }
 
-void ScalarConvert::convert(std::string const &input)
+void ScalarConvert::handleFloatPseudoLiteral(std::string const &literal)
 {
-	is_literal(input);
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+	std::cout << "float: " << literal << std::endl;
+	std::cout << "double: " << literal.substr(0, literal.size() - 1) << std::endl;
+	return;
 }
 
