@@ -25,8 +25,13 @@ class ScalarConvert {
 		ScalarConvert(std::string str);
 		~ScalarConvert();
 		ScalarConvert(ScalarConvert const &other);
-		static void handleFloatPseudoLiteral(std::string const &literal);
-
+		static void handleInfPseudoLiteral(std::string const &literal);
+		static void handleNanPseudoLiteral(std::string const &literal);
+		static void handleNumericLiteral(std::string const &literal);
+		static void handleFloatLiteral(std::string const &literal);
+		static void handleDoubleLiteral(std::string const &literal);
+		static void handleCharLiteral(std::string const &literal);
+		static void countDecimalPlaces(const std::string &s)
 };
 
 

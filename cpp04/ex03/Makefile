@@ -3,7 +3,7 @@ CXX = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g3
 
 # Source files and target
-SRCS = main.cpp Animal.cpp Dog.cpp Cat.cpp WrongAnimal.cpp WrongCat.cpp Brain.cpp
+SRCS = main.cpp MateriaSource.cpp Character.cpp Amateria.cpp Ice.cpp Cure.cpp
 TARGET = exe
 
 # Object files

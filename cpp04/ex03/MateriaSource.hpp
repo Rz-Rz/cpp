@@ -17,8 +17,9 @@ class MateriaSource : public IMateriaSource
 	private:
 		AMateria *_inventory[4];
 		int _count;
-		MateriaSource();
+
 	public:
+		MateriaSource();
 		MateriaSource(MateriaSource const & src);
 		virtual ~MateriaSource();
 		MateriaSource & operator=(MateriaSource const & rhs);

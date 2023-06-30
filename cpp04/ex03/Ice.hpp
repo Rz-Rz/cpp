@@ -1,8 +1,8 @@
 #include "string"
 #include "Amateria.hpp"
 
-#ifndef AMATERIA_HPP
-# define AMATERIA_HPP
+#ifndef ICE_HPP
+# define ICE_HPP
 
 class Ice : public AMateria 
 {
@@ -13,6 +13,5 @@ class Ice : public AMateria
 		Ice & operator=(Ice const & rhs);
 		virtual AMateria* clone() const;
 		virtual void use(ICharacter& target);
-
 };
 #endif
