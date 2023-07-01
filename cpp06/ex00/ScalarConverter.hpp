@@ -31,7 +31,19 @@ class ScalarConvert {
 		static void handleFloatLiteral(std::string const &literal);
 		static void handleDoubleLiteral(std::string const &literal);
 		static void handleCharLiteral(std::string const &literal);
-		static void countDecimalPlaces(const std::string &s)
+		static int countDecimalPlaces(const std::string &s);
+		static bool validateInput(std::string const &literal);
+		static int getPrecision(std::string const &literal);
+		static void printChar(double d);
+		static void printInt(double d);
+		static void printFloat(double d, std::string const &literal);
+		static void printDouble(double d, std::string const &literal);
+		static void printDoubleOverflow();
+		static void printIntOverflow();
+		static void printCharOverflow();
+		static void printFloatOverflow();
+		static bool floatOverflow(double d);
+
 };
 
 
