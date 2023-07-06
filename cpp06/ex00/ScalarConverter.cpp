@@ -50,21 +50,65 @@ void ScalarConvert::handleNanPseudoLiteral(std::string const &literal)
 
 }
 
+bool ScalarConvert::checkTwoQuotes(const std::string &literal) {
+    int count = 0;
+    for (size_t i = 0; i < literal.size(); ++i) {
+        if (literal[i] == '\'') {
+            ++count;
+        }
+    }
+    return count == 2;
+}
+#include <stdio.h>
+
+bool ScalarConvert::atLeastOneNum(std::string const &literal)
+{
+	 for (std::string::const_iterator it = literal.begin(); it != literal.end(); ++it)
+    {
+        if (std::isdigit(*it))
+            return true;
+    }
+	return false;
+}
+
 bool ScalarConvert::validateInput(std::string const &literal)
 {
-	 std::string valid_chars = ".f+-0123456789";
+	 std::string valid_chars = ".f+-0123456789'";
 	 size_t f_pos = literal.find_first_of('f');
 
+	 if (atLeastOneNum(literal) == false)
+		 return false;
 	 if (literal.find_first_not_of(valid_chars) != std::string::npos)
 		 return false;
-	 if (f_pos != std::string::npos && f_pos != literal.size() - 1)
+	 if (literal.find(".") != std::string::npos)
+	 {
+		 if (f_pos != std::string::npos && f_pos != literal.size() - 1)
+			 return false;
+		 if (literal.find("'") != std::string::npos)
+			 return false;
+		 return (true);
+	 }
+	 if (f_pos != std::string::npos)
 		 return false;
+	 if (literal.find("'") != std::string::npos)
+	 {
+		 if (literal.find("f") != std::string::npos || literal.find(".") != std::string::npos)
+			 return false;
+		 if (literal[0] != '\'' || literal[literal.size() - 1] != '\'')
+			 return false;
+		 if (!checkTwoQuotes(literal))
+			 return false;
+	 }
 	 return true;
 }
 
 void ScalarConvert::handleNumericLiteral(std::string const &literal)
 {
-
+	if (!validateInput(literal))
+	{
+		std::cout << "Invalid input" << std::endl;
+		return;
+	}
 	if (literal.find('.') != std::string::npos)
 	{
 		if (literal.find('f') != std::string::npos)
@@ -74,8 +118,8 @@ void ScalarConvert::handleNumericLiteral(std::string const &literal)
 	}
 	else if (literal.find('\'') != std::string::npos)
 		handleCharLiteral(literal);
-	/* else */
-	/* 	handleIntLiteral(literal); */
+	else
+		handleIntLiteral(literal);
 }
 
 int ScalarConvert::countDecimalPlaces(const std::string &s)
@@ -104,35 +148,14 @@ int ScalarConvert::getPrecision(const std::string &literal)
 
 void ScalarConvert::handleFloatLiteral(std::string const &literal)
 {
-	float f;
 	double d;
-	std::stringstream ss;
 	char* end;
 	
-	/* std::cout << "HERE\n" << std::endl; */
-	f = static_cast<float>(std::strtof(literal.c_str(), &end));
-	d = static_cast<double>(f);
-	if (f >= std::numeric_limits<char>::min() && f <= std::numeric_limits<char>::max())
-	{
-		if (std::isprint(static_cast<char>(f)))
-			std::cout << "char: '" << static_cast<char>(f) << "'" << std::endl;
-		else
-			std::cout << "char: Non displayable" << std::endl;
-	}
-	else
-		std::cout << "char: impossible" << std::endl;
-
-	if (f >= std::numeric_limits<int>::min() && f <= std::numeric_limits<int>::max())
-		std::cout << "int: " << static_cast<int>(f) << std::endl;
-	else
-		std::cout << "int: impossible" << std::endl;
-	
-	if ((f == std::numeric_limits<float>::max() || f == -std::numeric_limits<float>::max()) && errno == ERANGE )
-		std::cout << "float: impossible" << std::endl;
-	else
-		std::cout << "float: " << std::fixed << std::setprecision(getPrecision(literal)) << f << "f" << std::endl;
-
-	std::cout << "double: " << static_cast<double>(d) << std::endl;
+	d = static_cast<double>(std::strtod(literal.c_str(), &end));
+	printChar(d);
+	printInt(d);
+	printFloat(d, literal);
+	printDouble(d, literal);
 	std::cout << std::resetiosflags(std::ios_base::fixed | std::ios_base::floatfield);
 	return;
 }
@@ -145,49 +168,29 @@ void ScalarConvert::handleDoubleLiteral(std::string const &literal)
 
 	errno = 0;
 	d = static_cast<double>(std::strtod(literal.c_str(), &end));
-	if (errno == ERANGE)
-	{
-		printCharOverflow();
-		printIntOverflow();
-		printFloatOverflow();
-		printDoubleOverflow();
-		errno = 0;
-	}
-	else {
-		if (floatOverflow(d))
-		{
-			printCharOverflow();
-			printIntOverflow();
-			printFloatOverflow();
-			printDouble(d, literal);
-		}
-	}
-		
-	if (d >= std::numeric_limits<char>::min() && d <= std::numeric_limits<char>::max())
-	{
-		if (std::isprint(static_cast<char>(d)))
-			std::cout << "char: '" << static_cast<char>(d) << "'" << std::endl;
-		else
-			std::cout << "char: Non displayable" << std::endl;
-	}
-	else
-		std::cout << "char: impossible" << std::endl;
-
-	if (d >= std::numeric_limits<int>::min() && d <= std::numeric_limits<int>::max())
-		std::cout << "int: " << static_cast<int>(d) << std::endl;
-	else
-		std::cout << "int: impossible" << std::endl;
+	printChar(d);
+	printInt(d);
+	printFloat(d, literal);
 	printDouble(d, literal);
 	std::cout << std::resetiosflags(std::ios_base::fixed | std::ios_base::floatfield);
 	return;
 }
 
+void ScalarConvert::handleIntLiteral(std::string const &literal)
+{
+	double d;
+
+   d = static_cast<double>(std::strtod(literal.c_str(), NULL));
+   printChar(d);
+   printInt(d);
+   printFloat(d, literal);
+   printDouble(d, literal);
+   std::cout << std::resetiosflags(std::ios_base::fixed | std::ios_base::floatfield);
+}
+
 void ScalarConvert::handleCharLiteral(std::string const &literal)
 {
-	int i = 0;
-	float f;
 	double d;
-	char c;
 	char *end;
 	std::string literalWithoutQuotes;
 
@@ -197,31 +200,12 @@ void ScalarConvert::handleCharLiteral(std::string const &literal)
 			literalWithoutQuotes += literal[i];
 		}
 	}
-	d = static_cast<double>(std::strtol(literalWithoutQuotes.c_str(), &end, 10));
-	if (i >= std::numeric_limits<char>::min() && i <= std::numeric_limits<char>::max())
-	{
-		if (std::isprint(static_cast<char>(i)))
-		{
-			c = static_cast<char>(i);
-			std::cout << "char: '" << c << "'" << std::endl;
-		}
-		else
-			std::cout << "char: Non displayable" << std::endl;
-	}
-	else
-		std::cout << "char: impossible" << std::endl;
-
-	if (i >= std::numeric_limits<int>::min() && i <= std::numeric_limits<int>::max())
-	{
-		i = static_cast<int>(i);
-		std::cout << "int: " << i << std::endl;
-	}
-	else
-		std::cout << "int: impossible" << std::endl;
-	f = static_cast<float>(i);
-	d = static_cast<double>(i);
-	std::cout << "float: " << f << ".0f" << std::endl;
+	d = static_cast<double>(std::strtod(literalWithoutQuotes.c_str(), &end));
+	printChar(d);
+	printInt(d);
+	printFloat(d, literal);
 	printDouble(d, literal);
+	std::cout << std::resetiosflags(std::ios_base::fixed | std::ios_base::floatfield);
 	return;
 }
 
@@ -241,26 +225,6 @@ void ScalarConvert::printDouble(double d, std::string const &literal)
 	}
 }
 
-void ScalarConvert::printFloat(double d, std::string const &literal)
-{
-	float f;
-	if (std::numeric_limits<float>::max() < d || std::numeric_limits<float>::min() > d)
-	{
-		std::cout << "float: impossible" << std::endl;
-		return;
-	}
-	else
-	{
-		f = static_cast<float>(d);
-		if (getPrecision(literal) == 0)
-			std::cout << "float: " << f << ".0f" << std::endl;
-		else
-		{
-			std::cout << std::fixed << std::setprecision(getPrecision(literal)) << f << "f" << std::endl;
-			std::cout << std::resetiosflags(std::ios_base::fixed | std::ios_base::floatfield);
-		}
-	}
-}
 
 void printDoubleOverflow()
 {
@@ -286,4 +250,53 @@ bool floatOverflow(double d)
 	if (std::numeric_limits<float>::max() < d || std::numeric_limits<float>::min() > d)
 		return true;
 	return false;
+}
+
+bool doubleOverflow(double d)
+{
+	if (std::numeric_limits<double>::max() < d || std::numeric_limits<double>::min() > d)
+		return true;
+	return false;
+}
+
+void ScalarConvert::printChar(double d)
+{
+	if (d >= std::numeric_limits<char>::min() && d <= std::numeric_limits<char>::max())
+	{
+		if (std::isprint(static_cast<char>(d)))
+			std::cout << "char: '" << static_cast<char>(d) << "'" << std::endl;
+		else
+			std::cout << "char: Non displayable" << std::endl;
+	}
+	else
+		std::cout << "char: impossible" << std::endl;
+}
+
+void ScalarConvert::printInt(double d)
+{
+	if (d >= std::numeric_limits<int>::min() && d <= std::numeric_limits<int>::max())
+		std::cout << "int: " << static_cast<int>(d) << std::endl;
+	else
+		std::cout << "int: impossible" << std::endl;
+}
+
+void ScalarConvert::printFloat(double d, std::string const &literal)
+{
+	float f;
+	if (std::numeric_limits<float>::max() < d || std::numeric_limits<float>::min() > d)
+	{
+		std::cout << "float: impossible" << std::endl;
+		return;
+	}
+	else
+	{
+		f = static_cast<float>(d);
+		if (getPrecision(literal) == 0)
+			std::cout << "float: " << f << ".0f" << std::endl;
+		else
+		{
+			std::cout << std::fixed << std::setprecision(getPrecision(literal)) << "float: " << f << "f" << std::endl;
+			std::cout << std::resetiosflags(std::ios_base::fixed | std::ios_base::floatfield);
+		}
+	}
 }
