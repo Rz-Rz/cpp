@@ -1,5 +1,8 @@
 #include <iostream>
 
+#ifndef ITER_HPP
+#define ITER_HPP
+
 template <typename T>
 void printElement(T const & element) {
     std::cout << element << std::endl;
@@ -11,3 +14,4 @@ void iter(T* array, size_t size, F function) {
         function(array[i]);
     }
 }
+#endif
