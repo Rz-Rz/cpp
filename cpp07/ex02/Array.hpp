@@ -13,6 +13,12 @@ class Array
 	public:
 		Array();
 		Array(unsigned int size);
+    Array(const Array& other);
+
+    Array& operator=(const Array& other);
+    T& operator[](unsigned int index);
+    const T& operator[](unsigned int index) const;
+
 
 };
 #endif
