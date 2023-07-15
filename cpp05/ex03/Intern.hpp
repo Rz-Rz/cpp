@@ -1,5 +1,5 @@
 #include <string>
-#include "Form.hpp"
+#include "AForm.hpp"
 
 #ifndef INTERN_HPP
 # define INTERN_HPP
@@ -11,7 +11,7 @@ class Intern {
 		virtual ~Intern();
 		Intern &operator=(const Intern &copy);
 
-		Form *makeForm(std::string formName, std::string target);
+		AForm *makeForm(std::string formName, std::string target);
 
 		class FormNotFoundException : public std::exception
 		{
@@ -23,7 +23,7 @@ class Intern {
 		typedef struct s_formList
 		{
 			std::string formName;
-			Form *formType;
+			AForm *formType;
 		} FormCreator;
 };
 #endif

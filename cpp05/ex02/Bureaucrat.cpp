@@ -48,6 +48,19 @@ const char *Bureaucrat::GradeTooHighException::what() const throw() {
 	return "Grade too high";
 }
 
+void Bureaucrat::executeForm(AForm const & form)
+{
+  try
+  {
+    form.execute(*this);
+    std::cout << this->getName() << " executes " << form.getName() << std::endl;
+  }
+  catch(const std::exception& e)
+  {
+    std::cout << this->getName() << " cannot execute " << form.getName() << " because " << e.what() << std::endl;
+  }
+}
+
 const char *Bureaucrat::GradeTooLowException::what() const throw() {
 	return "Grade too low";
 }

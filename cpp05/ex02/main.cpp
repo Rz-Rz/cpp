@@ -9,7 +9,6 @@
 int main()
 {
 	srand(time(NULL)); // Initialize random seed
-
 	try {
 		Bureaucrat john("John", 1); // Create a bureaucrat named John with grade 1
 		RobotomyRequestForm form("Alice"); // Create a robotomy request form for Alice
@@ -20,7 +19,7 @@ int main()
 
 		std::cout << "Form after signing:\n" << form << std::endl;
 
-		form.execute(john); // John executes the form
+		john.executeForm(form); // John executes the form
 	} catch (std::exception &e) {
 		std::cout << e.what() << std::endl;
 	}
@@ -39,6 +38,5 @@ int main()
 	} catch (std::exception &e) {
 		std::cout << e.what() << std::endl;
 	}
-
     return 0;
 }

@@ -26,7 +26,7 @@ const char *Intern::FormNotFoundException::what() const throw() {
 	return "Form not found";
 }
 
-Form *Intern::makeForm(std::string formName, std::string target) {
+AForm *Intern::makeForm(std::string formName, std::string target) {
 	FormCreator formList[] = {
 
 		{"robotomy request", new RobotomyRequestForm(target)},
@@ -34,7 +34,7 @@ Form *Intern::makeForm(std::string formName, std::string target) {
 		{"shrubbery creation", new ShrubberyCreationForm(target)},
 		{"", NULL}
 	};
-	Form *resultForm = NULL;
+	AForm *resultForm = NULL;
 
 	for (int i = 0; formList[i].formType != NULL; i++)
 	{
