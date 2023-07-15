@@ -1,10 +1,10 @@
 #include <string>
-#include "Form.hpp"
+#include "AForm.hpp"
 
 #ifndef ROBOTOMYREQUESTFORM_HPP
 # define ROBOTOMYREQUESTFORM_HPP
 
-class RobotomyRequestForm : public Form
+class RobotomyRequestForm : public AForm
 {
 	public:
 		RobotomyRequestForm();

@@ -2,17 +2,17 @@
 #include <cstdlib>
 #include <iostream>
 
-RobotomyRequestForm::RobotomyRequestForm() : Form("RobotomyRequestForm", 72, 45), _target("default")
+RobotomyRequestForm::RobotomyRequestForm() : AForm("RobotomyRequestForm", 72, 45), _target("default")
 {
 	return;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(std::string target) : Form("RobotomyRequestForm", 72, 45), _target(target)
+RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRequestForm", 72, 45), _target(target)
 {
 	return;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &copy) : Form(copy), _target(copy.getTarget())
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &copy) : AForm(copy), _target(copy.getTarget())
 {
 	return;
 }
@@ -30,7 +30,7 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &c
 {
 	if (this != &copy)
 	{
-		Form::operator=(copy);
+		AForm::operator=(copy);
 		_target = copy.getTarget();
 	}
 	return (*this);
@@ -43,9 +43,9 @@ const char *RobotomyRequestForm::RobotomizationFailureException::what() const th
 
 void RobotomyRequestForm::execute(const Bureaucrat &executor) const {
 	if (executor.getGrade() > getGradeToExecute())
-		throw Form::GradeTooLowException();
+		throw AForm::GradeTooLowException();
 	if (!getSigned())
-		throw Form::FormNotSignedException();
+		throw AForm::FormNotSignedException();
 	std::cout << "* drilling noises *" << std::endl;
 	if (rand() % 2)
 		std::cout << _target << " has been robotomized successfully" << std::endl;

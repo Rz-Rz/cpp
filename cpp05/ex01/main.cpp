@@ -75,6 +75,5 @@ int main()
 		std::cout << "Caught exception: " << e.what() << std::endl;
 	}
 
-	return 0;
     return 0;
 }

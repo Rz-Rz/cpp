@@ -3,6 +3,10 @@
 
 Form::Form(std::string name, int gradeToSign, int gradeToExecute) :_name(name), _signed(false), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute)
 {
+  if (_gradeToSign > 150 || _gradeToExecute > 150)
+    throw Form::GradeTooLowException();
+  if (_gradeToSign < 1 || _gradeToExecute < 1)
+    throw Form::GradeTooHighException();
 }
 
 Form::Form(const Form &copy) : _name(copy.getName()), _signed(copy.getSigned()), _gradeToSign(copy.getGradeToSign()), _gradeToExecute(copy.getGradeToExecute())

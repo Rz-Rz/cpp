@@ -1,12 +1,12 @@
 #include "ShrubberyCreationForm.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 #include <fstream>
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : Form("ShrubberyCreationForm", 145, 137), _target(target) {
+ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : AForm("ShrubberyCreationForm", 145, 137), _target(target) {
 	return;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const & src) : Form(src), _target(src.getTarget()) {
+ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const & src) : AForm(src), _target(src.getTarget()) {
 	return;
 }
 
@@ -17,7 +17,7 @@ ShrubberyCreationForm::~ShrubberyCreationForm(void) {
 ShrubberyCreationForm & ShrubberyCreationForm::operator=(ShrubberyCreationForm const & rhs) {
 	if (this != &rhs)
 	{
-		Form::operator=(rhs);
+		AForm::operator=(rhs);
 		this->_target = rhs.getTarget();
 	}
 	return *this;
@@ -29,9 +29,9 @@ std::string ShrubberyCreationForm::getTarget(void) const {
 
 void ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
 	if (this->getSigned() == false)
-		throw Form::FormNotSignedException();
+		throw AForm::FormNotSignedException();
 	if (executor.getGrade() > this->getGradeToExecute())
-		throw Form::GradeTooLowException();
+		throw AForm::GradeTooLowException();
 	std::ofstream ofs((this->getTarget() + "_shrubbery").c_str());
 	ofs << "      /\\      " << std::endl;
 	ofs << "     /\\*\\     " << std::endl;

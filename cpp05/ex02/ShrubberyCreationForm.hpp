@@ -1,11 +1,11 @@
 #include <string>
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 #ifndef SHRUBBERYCREATIONFORM_HPP
 # define SHRUBBERYCREATIONFORM_HPP
 
-class ShrubberyCreationForm : public Form {
+class ShrubberyCreationForm : public AForm {
 	public:
 		ShrubberyCreationForm(std::string target);
 		ShrubberyCreationForm(ShrubberyCreationForm const & src);

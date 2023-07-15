@@ -1,17 +1,17 @@
 #include "PresidentialPardonForm.hpp"
 #include <iostream>
 
-PresidentialPardonForm::PresidentialPardonForm() : Form("PresidentialPardonForm", 25, 5), _target("default")
+PresidentialPardonForm::PresidentialPardonForm() : AForm("PresidentialPardonForm", 25, 5), _target("default")
 {
 	return;
 }
 
-PresidentialPardonForm::PresidentialPardonForm(std::string target) : Form("PresidentialPardonForm", 25, 5), _target(target)
+PresidentialPardonForm::PresidentialPardonForm(std::string target) : AForm("PresidentialPardonForm", 25, 5), _target(target)
 {
 	return;
 }
 
-PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &copy) : Form(copy), _target(copy.getTarget())
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &copy) : AForm(copy), _target(copy.getTarget())
 {
 	return;
 }
@@ -29,7 +29,7 @@ PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPard
 {
 	if (this != &copy)
 	{
-		Form::operator=(copy);
+		AForm::operator=(copy);
 		_target = copy.getTarget();
 	}
 	return (*this);
@@ -42,8 +42,8 @@ const char *PresidentialPardonForm::PresidentialPardonException::what() const th
 
 void PresidentialPardonForm::execute(const Bureaucrat &executor) const {
 	if (executor.getGrade() > getGradeToExecute())
-		throw Form::GradeTooLowException();
+		throw AForm::GradeTooLowException();
 	if (!getSigned())
-		throw Form::FormNotSignedException();
+		throw AForm::FormNotSignedException();
 	std::cout << _target << " has been pardoned by Zafod Beeblebrox" << std::endl;
 }
