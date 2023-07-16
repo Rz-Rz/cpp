@@ -12,13 +12,15 @@ class Array
 
 	public:
 		Array();
-		Array(unsigned int size);
+		Array(unsigned int n);
     Array(const Array& other);
+    ~Array(); 
 
     Array& operator=(const Array& other);
     T& operator[](unsigned int index);
     const T& operator[](unsigned int index) const;
-
-
+    size_t size() const;
 };
+
+#include "Array.tpp"
 #endif
