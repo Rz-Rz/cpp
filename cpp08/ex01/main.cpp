@@ -57,6 +57,26 @@ int main()
     {
         std::cerr << "Exception caught: " << e.what() << std::endl;
     }
+     Span span(10);
+
+    std::vector<int> vec;
+    for (int i = 0; i < 10; ++i)
+    {
+        vec.push_back(i);
+    }
+
+    span.addRange(vec.begin(), vec.end());
+
+    try
+    {
+        std::cout << "Shortest span: " << span.shortestSpan() << std::endl;
+        std::cout << "Longest span: " << span.longestSpan() << std::endl;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+
 
     return 0;
 }
