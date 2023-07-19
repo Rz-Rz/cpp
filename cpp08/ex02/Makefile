@@ -3,7 +3,7 @@ CXX = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 
 # Source files and target
-SRCS = main.cpp span.cpp
+SRCS = main.cpp
 TARGET = exe
 
 # Object files
