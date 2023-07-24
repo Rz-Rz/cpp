@@ -5,16 +5,23 @@
 #include <map>
 
 class BitcoinExchange {
-public:
+  public:
     BitcoinExchange(const std::string& filename);
-    bool load();
+    bool load_csv();
+    bool load_psv(std::string filename);
     float getValue(const std::string& date);
-    void printAll();
+    void printDataset();
+    void printPsv();
+    bool isValidDateFormat(const std::string& date);
+    std::string trim(const std::string& str);
 
-private:
+
+  private:
     std::string filename;
-    std::map<std::string, float> data;
+    std::multimap<std::string, float> csv_data;
+    std::multimap<std::string, float> psv_data;
     bool validate(const std::string& date, float value);
 };
 
-#endif // BITCOINEXCHANGE_HPP
+
+#endif
