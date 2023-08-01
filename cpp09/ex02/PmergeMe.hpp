@@ -231,10 +231,10 @@ group_iterator<Iterator> make_group_iterator(group_iterator<Iterator> it, std::s
 
 template<
     typename RandomAccessIterator,
-    typename Compare
+    typename Compare = std::less<typename std::iterator_traits<RandomAccessIterator>::value_type>
 >
 auto merge_insertion_sort_impl(RandomAccessIterator first, RandomAccessIterator last,
-                               Compare compare)
+                               Compare compare=Compare())
 {
     // Cache all the differences between a Jacobsthal number and its
     // predecessor that fit in 64 bits, starting with the difference
@@ -264,19 +264,19 @@ auto merge_insertion_sort_impl(RandomAccessIterator first, RandomAccessIterator 
     ////////////////////////////////////////////////////////////
     // Group elements by pairs
 
-    auto end = has_stray ? std::prev(last) : last;
-    for (auto it = first ; it != end ; it += 2)
+    RandomAccessIterator end = has_stray ? std::prev(last) : last;
+    for (RandomAccessIterator it = first ; it != end ; it += 2)
     {
         if (compare(it[1], it[0]))
         {
-            iter_swap(it, it + 1);
+          std::iter_swap(it, it + 1);
         }
     }
 
     ////////////////////////////////////////////////////////////
     // Recursively sort the pairs by max
 
-    merge_insertion_sort(
+    merge_insertion_sort_impl(
         make_group_iterator(first, 2),
         make_group_iterator(end, 2),
         compare
@@ -367,4 +367,5 @@ auto merge_insertion_sort_impl(RandomAccessIterator first, RandomAccessIterator 
     }
     std::move(cache.begin(), cache.end(), first.base());
 }
+
 #endif
