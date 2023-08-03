@@ -67,17 +67,26 @@ void merge(int array[], int const left, int const mid, int const right)
     *rightArray = new int[subArrayTwo];
 
   // Copy data to temp arrays leftArray[] and rightArray[]
-    for (auto i = 0; i < subArrayOne; i++)
+    for (int i = 0; i < subArrayOne; i++)
+    {
         leftArray[i] = array[left + i];
-    for (auto j = 0; j < subArrayTwo; j++)
+        std::cout << "LeftArray[" << i << "] is " << leftArray[i];
+        std::cout << std::endl;
+
+    }
+    for (int j = 0; j < subArrayTwo; j++)
+    {
         rightArray[j] = array[mid + 1 + j];
+        std::cout << "RightArray[" << j << "] is " << rightArray[j];
+        std::cout << std::endl;
+    }
 
     std::cout << "SubArrayOne is " << subArrayOne << std::endl;
     std::cout << "SubArrayTwo is " << subArrayTwo << std::endl;
     int indexOfSubArrayOne = 0, // Initial index of first sub-array
         indexOfSubArrayTwo = 0; // Initial index of second sub-array
     int indexOfMergedArray = left; // Initial index of merged array
-    while (indexOfSubArray one < subArrayOne && indexOfSubArrayTwo < subArrayTwo) {
+    while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo) {
         if (leftArray[indexOfSubArrayOne] <= rightArray[indexOfSubArrayTwo]) {
             array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
             indexOfSubArrayOne++;
@@ -87,8 +96,10 @@ void merge(int array[], int const left, int const mid, int const right)
             indexOfSubArrayTwo++;
         }
         merge_comp++;
+        std::cout << "Merged Subarray: " << array[indexOfMergedArray];
         indexOfMergedArray++;
     }
+    std::cout << std::endl;
 
     // Copy the remaining elements of left[], if there are any
     while (indexOfSubArrayOne < subArrayOne) {
@@ -118,3 +129,9 @@ void mergeSort(int array[], int l, int r) {
     }
 }
 
+void printArray(int A[], int size)
+{
+    for (int i = 0; i < size; i++)
+        std::cout << A[i] << " ";
+    std::cout << std::endl;
+}

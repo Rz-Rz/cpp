@@ -6,217 +6,60 @@
 
 typedef long long ll;
 
-#include <algorithm>
-#include <cstddef>
-#include <cstdint>
-#include <functional>
-#include <list>
-#include <iterator>
-#include <type_traits>
-#include <vector>
-
-
-
-
-////////////////////////////////////////////////////////////
-// Merge-insertion sort
-
-template<
-    typename RandomAccessIterator,
-    typename Compare
->
-auto merge_insertion_sort_impl(RandomAccessIterator first, RandomAccessIterator last,
-                               Compare compare)
+int main(int argc, char *argv[])
 {
-    // Cache all the differences between a Jacobsthal number and its
-    // predecessor that fit in 64 bits, starting with the difference
-    // between the Jacobsthal numbers 4 and 3 (the previous ones are
-    // unneeded)
-    static constexpr std::uint_least64_t jacobsthal_diff[] = {
-        2u, 2u, 6u, 10u, 22u, 42u, 86u, 170u, 342u, 682u, 1366u,
-        2730u, 5462u, 10922u, 21846u, 43690u, 87382u, 174762u, 349526u, 699050u,
-        1398102u, 2796202u, 5592406u, 11184810u, 22369622u, 44739242u, 89478486u,
-        178956970u, 357913942u, 715827882u, 1431655766u, 2863311530u, 5726623062u,
-        11453246122u, 22906492246u, 45812984490u, 91625968982u, 183251937962u,
-        366503875926u, 733007751850u, 1466015503702u, 2932031007402u, 5864062014806u,
-        11728124029610u, 23456248059222u, 46912496118442u, 93824992236886u, 187649984473770u,
-        375299968947542u, 750599937895082u, 1501199875790165u, 3002399751580331u,
-        6004799503160661u, 12009599006321322u, 24019198012642644u, 48038396025285288u,
-        96076792050570576u, 192153584101141152u, 384307168202282304u, 768614336404564608u,
-        1537228672809129216u, 3074457345618258432u, 6148914691236516864u
-    };
-
-    using std::iter_swap;
-
-    auto size = std::distance(first, last);
-    if (size < 2) return;
-
-    // Whether there is a stray element not in a pair
-    // at the end of the chain
-    bool has_stray = (size % 2 != 0);
-
-    ////////////////////////////////////////////////////////////
-    // Group elements by pairs
-
-    auto end = has_stray ? std::prev(last) : last;
-    for (auto it = first ; it != end ; it += 2)
-    {
-        if (compare(it[1], it[0]))
-        {
-            iter_swap(it, it + 1);
-        }
-    }
-
-    ////////////////////////////////////////////////////////////
-    // Recursively sort the pairs by max
-
-    merge_insertion_sort(
-        make_group_iterator(first, 2),
-        make_group_iterator(end, 2),
-        compare
-    );
-
-    ////////////////////////////////////////////////////////////
-    // Separate main chain and pend elements
-
-    // Small node struct for pend elements
-    struct node
-    {
-        RandomAccessIterator it;
-        typename std::list<RandomAccessIterator>::iterator next;
-    };
-
-    // The first pend element is always part of the main chain,
-    // so we can safely initialize the list with the first two
-    // elements of the sequence
-    std::list<RandomAccessIterator> chain = { first, std::next(first) };
-    std::list<node> pend;
-
-    for (auto it = first + 2 ; it != end ; it += 2)
-    {
-        auto tmp = chain.insert(chain.end(), std::next(it));
-        pend.push_back({it, tmp});
-    }
-
-    // Add the last element to pend if it exists, when it
-    // exists, it always has to be inserted in the full chain,
-    // so giving it chain.end() as end insertion point is ok
-    if (has_stray)
-    {
-        pend.push_back({end, chain.end()});
-    }
-
-    ////////////////////////////////////////////////////////////
-    // Binary insertion into the main chain
-
-    for (int k = 0 ; ; ++k)
-    {
-        // Find next index
-        auto dist = jacobsthal_diff[k];
-        if (dist >= pend.size()) break;
-        auto it = pend.begin();
-        std::advance(it, dist);
-
-        while (true)
-        {
-            auto insertion_point = std::upper_bound(
-                chain.begin(), it->next, it->it,
-                [=](auto lhs, auto rhs) {
-                    return compare(*lhs, *rhs);
-                }
-            );
-            chain.insert(insertion_point, it->it);
-
-            it = pend.erase(it);
-            if (it == pend.begin()) break;
-            --it;
-        }
-         }
-
-    // If there are elements left, insert them too
-    while (not pend.empty())
-    {
-        auto it = std::prev(pend.end());
-        auto insertion_point = std::upper_bound(
-            chain.begin(), it->next, it->it,
-            [=](auto lhs, auto rhs) {
-                return compare(*lhs, *rhs);
-            }
-        );
-        chain.insert(insertion_point, it->it);
-        pend.pop_back();
-    }
-
-    ////////////////////////////////////////////////////////////
-    // Move values in order to a cache then back to origin
-
-    std::vector<typename std::iterator_traits<RandomAccessIterator>::value_type> cache;
-    cache.reserve(size);
-
-    for (auto&& it: chain)
-    {
-        auto begin = it.base();
-        auto end = begin + it.size();
-        std::move(begin, end, std::back_inserter(cache));
-    }
-    std::move(cache.begin(), cache.end(), first.base());
+    (void)argc;
+    (void)argv;
+    int arr[] = { 12, 11, 13, 5, 6, 7 };
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+ 
+    std::cout << "Given array is \n";
+    printArray(arr, arr_size);
+ 
+    mergeSort(arr, 0, arr_size - 1);
+ 
+    std::cout << "\nSorted array is \n";
+    printArray(arr, arr_size);
+    return 0;
+  // std::vector<ll> v = fillVector(argc, argv);
+  // unsigned long n = v.size();
+  //
+  // std::cout << "Original vector: " << std::endl;
+  // printVector(v);
+  //
+  // std::sort(v.begin(), v.begin() + n/2); // first step of merge sort -- insertion sort
+  // std::cout << "Sorted vector: " << std::endl;
+  // printVector(v);
+  //
+  // std::priority_queue<std::pair<ll, ll>, std::vector<std::pair<ll, ll> >, ComparePair> pq;
+  //
+  // for (unsigned long i = 0; i < n/2; i++) {
+  //   std::pair<ll, ll> p = std::make_pair(v[i], v[i + n/2]);
+  //   pq.push(p);
+  // }
+  // if (n % 2 != 0) {
+  //   std::pair<ll, ll> p = std::make_pair(v[n - 1], std::numeric_limits<ll>::max());
+  //   pq.push(p);
+  // }
+  // std::cout << "Pairs: " << std::endl;
+  // printPriorityQueue(pq);
+  //
+  // v.clear();
+  // v.resize(n);
+  //
+  // unsigned long i = 0;
+  // while (!pq.empty()) {
+  //   std::pair<ll, ll> p = pq.top();
+  //   pq.pop();
+  //   v[i++] = p.first;
+  //   if (p.second != std::numeric_limits<ll>::max()) {
+  //     v[i++] = p.second;
+  //   }
+  // }
+  // std::cout << "Merged vector: " << std::endl;
+  // printVector(v);
+  //
+  //
+  //
+  return 0;
 }
-
-template<
-    typename RandomAccessIterator,
-    typename Compare = std::less<>
->
-auto merge_insertion_sort(RandomAccessIterator first, RandomAccessIterator last,
-                          Compare compare={})
-    -> void
-{
-    merge_insertion_sort_impl(
-        make_group_iterator(first, 1),
-        make_group_iterator(last, 1),
-        compare
-    );
-}
-// int main(int argc, char *argv[])
-// {
-//   std::vector<ll> v = fillVector(argc, argv);
-//   unsigned long n = v.size();
-//
-//   std::cout << "Original vector: " << std::endl;
-//   printVector(v);
-//
-//   std::sort(v.begin(), v.begin() + n/2); // first step of merge sort -- insertion sort
-//   std::cout << "Sorted vector: " << std::endl;
-//   printVector(v);
-//
-//   std::priority_queue<std::pair<ll, ll>, std::vector<std::pair<ll, ll> >, ComparePair> pq;
-//
-//   for (unsigned long i = 0; i < n/2; i++) {
-//     std::pair<ll, ll> p = std::make_pair(v[i], v[i + n/2]);
-//     pq.push(p);
-//   }
-//   if (n % 2 != 0) {
-//     std::pair<ll, ll> p = std::make_pair(v[n - 1], std::numeric_limits<ll>::max());
-//     pq.push(p);
-//   }
-//   std::cout << "Pairs: " << std::endl;
-//   printPriorityQueue(pq);
-//
-//   v.clear();
-//   v.resize(n);
-//
-//   unsigned long i = 0;
-//   while (!pq.empty()) {
-//     std::pair<ll, ll> p = pq.top();
-//     pq.pop();
-//     v[i++] = p.first;
-//     if (p.second != std::numeric_limits<ll>::max()) {
-//       v[i++] = p.second;
-//     }
-//   }
-//   std::cout << "Merged vector: " << std::endl;
-//   printVector(v);
-//
-//
-//
-//   return 0;
-// }
