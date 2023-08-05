@@ -22,6 +22,7 @@ void printPriorityQueue(std::priority_queue<std::pair<ll, ll>, std::vector<std::
 void printArray(int A[], int size);
 void mergeSort(int array[], int l, int r);
 void merge(int array[], int const left, int const mid, int const right);
+void insertSort(int A[], int n);
 
 
 // ////////////////////////////////////////////////////////////

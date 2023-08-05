@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     std::cout << "Given array is \n";
     printArray(arr, arr_size);
  
-    mergeSort(arr, 0, arr_size - 1);
+    insertSort(arr, arr_size);
  
     std::cout << "\nSorted array is \n";
     printArray(arr, arr_size);
