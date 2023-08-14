@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include "Pairs.hpp"
 #include <algorithm>
 #include <iostream>
 #include <queue>
@@ -6,12 +7,19 @@
 
 typedef long long ll;
 
+
+
 int main(int argc, char *argv[])
 {
     (void)argc;
     (void)argv;
     int arr[] = { 12, 11, 13, 5, 6, 7 };
     int arr_size = sizeof(arr) / sizeof(arr[0]);
+    int a = 1;
+    int b = 2;
+    Pair<int> p = Pair<int>(a, b);
+    Pair<int> x = p;
+    Pair<int> y;
  
     std::cout << "Given array is \n";
     printArray(arr, arr_size);
