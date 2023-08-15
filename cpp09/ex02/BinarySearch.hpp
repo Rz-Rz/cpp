@@ -3,7 +3,6 @@
 #include <vector>
 #include <deque>
 
-
 template <typename T>
 static typename std::vector<T>::iterator binary_search(typename std::vector<T>::iterator first, typename std::vector<T>::iterator last, T &val)
 {
