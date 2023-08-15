@@ -6,6 +6,9 @@ CXXFLAGS = -Wall -Wextra -Werror -g3 -std=c++98
 TEST_SRCS = test_pairs.cpp
 TEST_TARGET = test_pairs
 
+STACK_SRCS = test_stack.cpp
+STACK_TARGET = test_stack
+
 # Source files and target
 SRCS = main.cpp PmergeMe.cpp
 TARGET = PmergeMe
@@ -13,6 +16,7 @@ TARGET = PmergeMe
 # Object files
 OBJS = $(SRCS:.cpp=.o)
 TEST_OBJS = $(TEST_SRCS:.cpp=.o)
+STACK_OBJS = $(STACK_SRCS:.cpp=.o)
 
 # Default rule: build the target
 all: $(TARGET)
@@ -26,6 +30,10 @@ test: $(TEST_OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TEST_TARGET) $^
 	./$(TEST_TARGET)
 
+stack: $(STACK_OBJS)
+	$(CXX) $(CXXFLAGS) -o $(STACK_TARGET) $^
+	./$(STACK_TARGET)
+
 # Rule to build object files from source files
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
@@ -34,10 +42,12 @@ test: $(TEST_OBJS)
 clean:
 	rm -f $(OBJS)
 	rm -f $(TEST_OBJS)
+	rm -f $(STACK_OBJS)
 
 fclean: clean
 	rm -f $(TARGET)
 	rm -f $(TEST_TARGET)
+	rm -f $(STACK_TARGET)
 
 re: clean all
 
