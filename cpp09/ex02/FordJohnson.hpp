@@ -3,9 +3,11 @@
 #include <vector>
 #include "Pairs.hpp"
 #include "BinarySearch.hpp"
+#include "Stack.hpp"
 
 void ford_johnson(std::vector<T> &v)
 {
+	Stack<std::vector<Pair<T> > > s;
 	T *stray;
 
 	// Create a while loop that will run until we have a list of one.
@@ -24,6 +26,8 @@ void ford_johnson(std::vector<T> &v)
 			// Add the pair to the vector.
 			u[i] = p;
 		}
+		//The vector is full of pairs, we can simulate the behaviour of a recursive call by pushing it in a stack.
+
 
 
 

@@ -9,6 +9,7 @@ class Pair
   private:  
     T* _a; 
     T* _b;
+	T* _stray;
 
   public:
     // Constructors/Desctructors
@@ -20,10 +21,12 @@ class Pair
     // Getters
     T& getA() const;
     T& getB() const;
+	T& getStray() const;
 
     // Setters
     void setA(T& a);
     void setB(T& b);
+	void setStray(T& stray);
 
     // Operators
     Pair<T>& operator=(const Pair<T>& p);

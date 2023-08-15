@@ -33,6 +33,11 @@ T& Pair<T>::getB() const {
   return *_b; 
 }
 
+template <typename T>
+T& Pair<T>::getStray() const {
+  return *_stray; 
+}
+
 // Setters
 template <typename T>
 void Pair<T>::setA(T& a) { 
@@ -42,6 +47,11 @@ void Pair<T>::setA(T& a) {
 template <typename T>
 void Pair<T>::setB(T& b) { 
   _b = &b; 
+}
+
+template <typename T>
+void Pair<T>::setStray(T& stray) { 
+  _stray = &stray; 
 }
 
 template <typename T>
