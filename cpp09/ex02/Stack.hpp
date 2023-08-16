@@ -47,12 +47,9 @@ public:
 		int i = stack.size();
 		while (!stack.empty())
 		{
-			std::vector<Pair<T> > pairs = top();
+			T topElement = top();
 			std::cout << "Level of Simulated recursion: " << i << std::endl;
-			for (size_t j = 0; j < pairs.size(); j++)
-			{
-				std::cout << pairs[j] << " ";
-			}
+			Printer<T>::print(std::cout, topElement);
 			std::cout << std::endl;
 			i--;
 			pop();

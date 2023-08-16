@@ -43,7 +43,42 @@ class Pair
 };
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, const Pair<T>& p);
+struct Printer {
+    static void print(std::ostream& os, const T& value) {
+        os << value;
+    }
+};
+
+template <typename T>
+struct Printer<Pair<T> > {
+    static void print(std::ostream& os, const Pair<T>& p) {
+        os << "(";
+        Printer<T>::print(os, p.getA());
+        os << ", ";
+        Printer<T>::print(os, p.getB());
+        os << ")";
+    }
+};
+
+template <typename T>
+struct Printer<std::vector<T> > {
+    static void print(std::ostream& os, const std::vector<T>& vec) {
+        os << "[";
+        for (size_t i = 0; i < vec.size(); ++i) {
+            Printer<T>::print(os, vec[i]);
+            if (i < vec.size() - 1) os << ", ";
+        }
+        os << "]";
+    }
+};
+
+/* template <typename T> */
+/* std::ostream& operator<<(std::ostream& os, const Pair<T>& p); */
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const Pair<T>& p) {
+    Printer<Pair<T> >::print(os, p);
+    return os;
+}
 
 #include "Pairs.tpp"
 #endif

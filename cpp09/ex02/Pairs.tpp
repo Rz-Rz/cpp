@@ -99,9 +99,9 @@ bool Pair<T>::operator>=(const Pair<T>& p) const
   return (*_a >= *p._a);
 }
 
-template <typename T>
-std::ostream& operator<<(std::ostream& os, const Pair<T>& p)
-{
-  os << "(" << *(p.getA()) << ", " << *(p.getB()) << ")";
-  return os;
-}
+/* template <typename T> */
+/* std::ostream& operator<<(std::ostream& os, const Pair<T>& p) */
+/* { */
+/*   os << "(" << *(p.getA()) << ", " << *(p.getB()) << ")"; */
+/*   return os; */
+/* } */
