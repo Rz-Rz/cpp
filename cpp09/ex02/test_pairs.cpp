@@ -68,12 +68,37 @@ void testInequalityOperator() {
   std::cout << "InequalityOperator test failed\n";
 }
 
+// Function to test sort()
+void testSort() {
+	int a = 1;
+	int b = 10;
+	Pair<int> p(a, b);
+	p.sort();
+	if (p.getA() != 10 || p.getB() != 1) {
+		std::cerr << "Sort test failed\n";
+		return;
+	}
+	std::cout << "Sort test passed\n";
+}
+
+void testStray() {
+  int a = 5, b = 10;
+  Pair<int> p(a, b);
+	if (p.getStray() != NULL) {
+	std::cerr << "Stray test failed\n";
+	return;
+  }
+  std::cout << "Stray test passed\n";
+}
+
 int main() {
   testDefaultConstructor();
   testParameterizedConstructor();
   testCopyConstructor();
   testEqualityOperator();
   testInequalityOperator();
+  testSort();
+  testStray();
   return 0;
 }
 

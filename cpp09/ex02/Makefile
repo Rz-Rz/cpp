@@ -9,6 +9,9 @@ TEST_TARGET = test_pairs
 STACK_SRCS = test_stack.cpp
 STACK_TARGET = test_stack
 
+FJ_SRCS = test_fj.cpp
+FJ_TARGET = test_fj
+
 # Source files and target
 SRCS = main.cpp PmergeMe.cpp
 TARGET = PmergeMe
@@ -17,6 +20,7 @@ TARGET = PmergeMe
 OBJS = $(SRCS:.cpp=.o)
 TEST_OBJS = $(TEST_SRCS:.cpp=.o)
 STACK_OBJS = $(STACK_SRCS:.cpp=.o)
+FJ_OBJS = $(FJ_SRCS:.cpp=.o)
 
 # Default rule: build the target
 all: $(TARGET)
@@ -33,6 +37,10 @@ test: $(TEST_OBJS)
 stack: $(STACK_OBJS)
 	$(CXX) $(CXXFLAGS) -o $(STACK_TARGET) $^
 	./$(STACK_TARGET)
+
+fj: $(FJ_OBJS)
+	$(CXX) $(CXXFLAGS) -o $(FJ_TARGET) $^
+	./$(FJ_TARGET)
 
 # Rule to build object files from source files
 %.o: %.cpp

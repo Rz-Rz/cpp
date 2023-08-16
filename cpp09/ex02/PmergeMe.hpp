@@ -4,6 +4,8 @@
 #include <vector>
 #include <queue>
 #include <string>
+#include "Pairs.hpp"
+#include "Stack.hpp"
 
 typedef long long ll;
 

@@ -2,6 +2,7 @@
 #define PAIRS_HPP
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 template <typename T>
 class Pair
@@ -21,12 +22,12 @@ class Pair
     // Getters
     T& getA() const;
     T& getB() const;
-	T& getStray() const;
+	T* getStray() const;
 
     // Setters
     void setA(T& a);
     void setB(T& b);
-	void setStray(T& stray);
+	void setStray(T* stray);
 
     // Operators
     Pair<T>& operator=(const Pair<T>& p);
@@ -36,6 +37,9 @@ class Pair
     bool operator>(const Pair<T>& p) const;
     bool operator<=(const Pair<T>& p) const;
     bool operator>=(const Pair<T>& p) const;
+
+	// Useful
+	void sort();
 };
 
 template <typename T>

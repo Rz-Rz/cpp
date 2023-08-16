@@ -5,6 +5,7 @@
 #include "BinarySearch.hpp"
 #include "Stack.hpp"
 
+template <typename T>
 void ford_johnson(std::vector<T> &v)
 {
 	Stack<std::vector<Pair<T> > > s;
@@ -23,16 +24,16 @@ void ford_johnson(std::vector<T> &v)
 		{
 			// Create a pair that will hold the two values.
 			Pair<T> p(v[i * 2], v[i * 2 + 1]);
+			// store the stray in the last pair of the vector if there is the need to.
+			if (v.size() % 2 == 1 && i == v.size() / 2 - 1)
+				p.setStray(stray);
 			// Add the pair to the vector.
 			u[i] = p;
 		}
 		//The vector is full of pairs, we can simulate the behaviour of a recursive call by pushing it in a stack.
-
-
-
-
+		s.push(u);
 	}
-
+	s.printStack();
 }
 
 

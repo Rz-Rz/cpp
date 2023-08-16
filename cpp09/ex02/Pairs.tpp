@@ -1,13 +1,13 @@
 #include "Pairs.hpp"
 
 template <typename T>
-Pair<T>::Pair(): _a(0), _b(0) {}
+Pair<T>::Pair(): _a(0), _b(0), _stray(NULL) {}
 
 template <typename T>
-Pair<T>::Pair(T& a, T& b): _a(&a), _b(&b) {}
+Pair<T>::Pair(T& a, T& b): _a(&a), _b(&b), _stray(NULL) {}
 
 template <typename T>
-Pair<T>::Pair(const Pair<T>& p): _a(p._a), _b(p._b) {}
+Pair<T>::Pair(const Pair<T>& p): _a(p._a), _b(p._b), _stray(NULL) {}
 
 template <typename T>
 Pair<T>::~Pair() {}
@@ -22,6 +22,14 @@ Pair<T>& Pair<T>::operator=(const Pair<T>& p)
   return *this;
 }
 
+template <typename T>
+void Pair<T>::sort()
+{
+  if (*_a < *_b) {
+	  std::swap(*_a, *_b);
+  }
+}
+
 // Getters
 template <typename T>
 T& Pair<T>::getA() const { 
@@ -34,8 +42,8 @@ T& Pair<T>::getB() const {
 }
 
 template <typename T>
-T& Pair<T>::getStray() const {
-  return *_stray; 
+T* Pair<T>::getStray() const {
+  return _stray; 
 }
 
 // Setters
@@ -50,8 +58,8 @@ void Pair<T>::setB(T& b) {
 }
 
 template <typename T>
-void Pair<T>::setStray(T& stray) { 
-  _stray = &stray; 
+void Pair<T>::setStray(T* stray) { 
+  _stray = stray; 
 }
 
 template <typename T>
@@ -94,6 +102,6 @@ bool Pair<T>::operator>=(const Pair<T>& p) const
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Pair<T>& p)
 {
-  os << "(" << *p._a << ", " << *p._b << ")";
+  os << "(" << *(p.getA()) << ", " << *(p.getB()) << ")";
   return os;
 }

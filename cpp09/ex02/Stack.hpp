@@ -17,6 +17,11 @@ public:
         stack.push_back(value);
     }
 
+	// Get the size of the stack
+	int size() {
+		return stack.size();
+	}
+
     // Pop an element from the stack
     void pop() {
         if (isEmpty()) {
@@ -36,6 +41,23 @@ public:
         }
         return stack.back();
     }
+
+	void printStack()
+	{
+		int i = stack.size();
+		while (!stack.empty())
+		{
+			std::vector<Pair<T> > pairs = top();
+			std::cout << "Level of Simulated recursion: " << i << std::endl;
+			for (size_t j = 0; j < pairs.size(); j++)
+			{
+				std::cout << pairs[j] << " ";
+			}
+			std::cout << std::endl;
+			i--;
+			pop();
+		}
+	}
 
     // Check if the stack is empty
     bool isEmpty() {
