@@ -2,9 +2,9 @@
 
 Pair::Pair() : _a(NULL), _b(NULL), _stray(NULL) {};
 
-Pair::Pair(BasePair *a, BasePair *b) : _a(a), _b(b), _stray(NULL) {};
+Pair::Pair(BasePair *a, BasePair *b) : _a(a->clone()), _b(b->clone()), _stray(NULL) {};
 
-Pair::Pair(const Pair &p) : _a(p._a), _b(p._b), _stray(NULL) {};
+Pair::Pair(const Pair &p) : _a(p._a->clone()), _b(p._b->clone()), _stray(NULL) {};
 
 Pair::~Pair() { 
 	delete _a; 
