@@ -51,11 +51,13 @@ clean:
 	rm -f $(OBJS)
 	rm -f $(TEST_OBJS)
 	rm -f $(STACK_OBJS)
+	rm -f $(FJ_OBJS)
 
 fclean: clean
 	rm -f $(TARGET)
 	rm -f $(TEST_TARGET)
 	rm -f $(STACK_TARGET)
+	rm -f $(FJ_TARGET)
 
 re: clean all
 
