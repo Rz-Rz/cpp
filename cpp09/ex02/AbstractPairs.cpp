@@ -54,45 +54,71 @@ BasePair* Pair::getStray() const
 BasePair& Pair::operator=(const BasePair& p)
 {
 	if (this == &p)
-		return this;
+		return *this;
 	delete _a;
 	delete _b;
 	delete _stray;
-	_a = p._a->clone();
-	_b = p._b->clone();
-	_stray = p._stray ? p._stray->clone();
-
+	const Pair* pair = dynamic_cast<const Pair*>(&p);
+	if (pair) {
+		_a = pair->getA().clone();
+		_b = pair->getB().clone();
+		_stray = pair->_stray ? pair->_stray->clone() : NULL;
+	}
 	return *this;
 }
 
 bool Pair::operator==(const BasePair* p) const
 {
-	return (*_a == p->getA());
+	const Pair* pair = dynamic_cast<const Pair*>(&p);
+	if (pair) {
+		return (*_a == pair->getA());
+	}
+	return false;
 }
 
 bool Pair::operator!=(const BasePair* p) const
 {
-	return (*_a != p->getA());
+	const Pair* pair = dynamic_cast<const Pair*>(&p);
+	if (pair) {
+		return (*_a != pair->getA());
+	}
+	return false;
 }
 
 bool Pair::operator<(const BasePair* p) const
 {
-	return (*_a < p->getA());
+	const Pair* pair = dynamic_cast<const Pair*>(&p);
+	if (pair) {
+		return (*_a < pair->getA());
+	}
+	return false;
 }
 
 bool Pair::operator>(const BasePair* p) const
 {
-	return (*_a > p->getA());
+	const Pair* pair = dynamic_cast<const Pair*>(&p);
+	if (pair) {
+		return (*_a > pair->getA());
+	}
+	return false;
 }
 
 bool Pair::operator<=(const BasePair* p) const
 {
-	return (*_a <= p->getA());
+	const Pair* pair = dynamic_cast<const Pair*>(&p);
+	if (pair) {
+		return (*_a <= pair->getA());
+	}
+	return false;
 }
 
 bool Pair::operator>=(const BasePair* p) const
 {
-	return (*_a >= p->getA());
+	const Pair* pair = dynamic_cast<const Pair*>(&p);
+	if (pair) {
+		return (*_a >= pair->getA());
+	}
+	return false;
 }
 
 void Pair::sort()

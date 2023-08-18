@@ -1,6 +1,7 @@
 #ifndef LEAF_HPP
 #define LEAF_HPP
 #include "BasePair.hpp"
+#include <iostream>
 // Leaf class declaration - Value Holder
 class Leaf : public BasePair {
 	public: 
@@ -12,6 +13,9 @@ class Leaf : public BasePair {
 
 		void print() const;
 		BasePair *clone() const;
+		//Getters Setters
+		long double getValue() const;
+		void setValue(long double value);
 	
 	private: 
 		long double _value;

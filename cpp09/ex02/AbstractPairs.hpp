@@ -30,7 +30,7 @@ class Pair : public BasePair {
 		void setStray(BasePair* stray);
 
 		// Operators
-		BasePair &operator=(const BasePair* p);
+		BasePair &operator=(const BasePair& p);
 		bool operator==(const BasePair* p) const;
 		bool operator!=(const BasePair* p) const;
 		bool operator<(const BasePair* p) const;

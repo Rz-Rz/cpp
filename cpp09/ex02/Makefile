@@ -12,6 +12,12 @@ STACK_TARGET = test_stack
 FJ_SRCS = test_fj.cpp
 FJ_TARGET = test_fj
 
+LEAF_SRCS = test_leaf.cpp Leaf.cpp
+LEAF_TARGET = test_leaf
+
+ABSTRACT_PAIR_SRCS = test_abstract_pair.cpp AbstractPairs.cpp
+ABSTRACT_PAIR_TARGET = test_abstract_pairs
+
 # Source files and target
 SRCS = main.cpp PmergeMe.cpp
 TARGET = PmergeMe
@@ -21,6 +27,8 @@ OBJS = $(SRCS:.cpp=.o)
 TEST_OBJS = $(TEST_SRCS:.cpp=.o)
 STACK_OBJS = $(STACK_SRCS:.cpp=.o)
 FJ_OBJS = $(FJ_SRCS:.cpp=.o)
+LEAF_OBJS = $(LEAF_SRCS:.cpp=.o)
+ABSTRACT_PAIR_OBJS = $(ABSTRACT_PAIR_SRCS:.cpp=.o)
 
 # Default rule: build the target
 all: $(TARGET)
@@ -42,6 +50,15 @@ fj: $(FJ_OBJS)
 	$(CXX) $(CXXFLAGS) -o $(FJ_TARGET) $^
 	./$(FJ_TARGET)
 
+leaf: $(LEAF_OBJS)
+	$(CXX) $(CXXFLAGS) -o $(LEAF_TARGET) $^
+	./$(LEAF_TARGET)
+
+pair: $(ABSTRACT_PAIR_OBJS)
+	$(CXX) $(CXXFLAGS) -o $(ABSTRACT_PAIR_TARGET) $^
+	./$(ABSTRACT_PAIR_TARGET)
+
+
 # Rule to build object files from source files
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
@@ -52,14 +69,18 @@ clean:
 	rm -f $(TEST_OBJS)
 	rm -f $(STACK_OBJS)
 	rm -f $(FJ_OBJS)
+	rm -f $(LEAF_OBJS)
+	rm -f $(ABSTRACT_PAIR_OBJS)
 
 fclean: clean
 	rm -f $(TARGET)
 	rm -f $(TEST_TARGET)
 	rm -f $(STACK_TARGET)
 	rm -f $(FJ_TARGET)
+	rm -f $(LEAF_TARGET)
+	rm -f $(ABSTRACT_PAIR_TARGET)
 
-re: clean all
+re: fclean all
 
 # Rule to run the program
 run: $(TARGET)
