@@ -1,10 +1,11 @@
 #include "Leaf.hpp"
+#include "SmartPointer.hpp"
 
 Leaf::Leaf() : _value(0) {}
 
 Leaf::Leaf(long double value) : _value(value) {}
 
-Leaf::Leaf(const Leaf &l) : _value(l._value) {}
+Leaf::Leaf(const Leaf &l) : BasePair(l), _value(l._value) {}
 
 Leaf::~Leaf() {}
 
@@ -12,11 +13,19 @@ void Leaf::print() const {
 	std::cout << _value;
 }
 
-BasePair *Leaf::clone() const {
-	return new Leaf(*this);
+SmartPointer<BasePair> Leaf::clone() const {
+	return SmartPointer<BasePair>(new Leaf(*this));
 }
 
-long double Leaf::getValue() const {
+long double Leaf::b() const {
+	return _value;
+}
+
+long double Leaf::a() const {
+	return _value;
+}
+
+long double Leaf::stray() const {
 	return _value;
 }
 

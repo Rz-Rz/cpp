@@ -17,8 +17,8 @@ void test_leaf_copy_construct()
 void test_leaf_clone()
 {
 	Leaf l1(1);
-	BasePair *l2 = l1.clone();
-	Leaf* l3 = dynamic_cast<Leaf*>(l2);
+	SmartPointer<BasePair> l2 = l1.clone();
+	Leaf* l3 = dynamic_cast<Leaf*>(l2.operator->());
 	assert(l3->getValue() == 1);
 }
 

@@ -2,15 +2,14 @@
 
 Pair::Pair() : _a(NULL), _b(NULL), _stray(NULL) {};
 
-Pair::Pair(BasePair *a, BasePair *b) : _a(a->clone()), _b(b->clone()), _stray(NULL) {};
+Pair::Pair(BasePair *a, BasePair *b) : _a(a.clone()), _b(b.clone()), _stray(NULL) {
+  sort();
+};
 
-Pair::Pair(const Pair &p) : _a(p._a->clone()), _b(p._b->clone()), _stray(NULL) {};
+Pair::Pair(const Pair &p) : _a(p._a.clone()), _b(p._b.clone()), _stray(NULL) {};
 
 Pair::~Pair() { 
-	delete _a; 
-	delete _b; 
-	delete _stray;
-};
+}
 
 void Pair::print() const
 {
@@ -36,95 +35,73 @@ void Pair::setB(BasePair *b)
 	_b = b; 
 }
 
-BasePair* Pair::getA() const 
+long double Pair::a() const 
 { 
-	return _a; 
+  return _max;
+}
+long double Pair::b() const 
+{ 
+  return _min;
 }
 
-BasePair* Pair::getB() const 
+BasePair* Pair::stray() const 
 { 
-	return _b; 
-}
-
-BasePair* Pair::getStray() const 
-{ 
-	return _stray; 
+	return _stray.operator->();
 }
 
 BasePair& Pair::operator=(const BasePair& p)
 {
 	if (this == &p)
 		return *this;
-	delete _a;
-	delete _b;
-	delete _stray;
 	const Pair* pair = dynamic_cast<const Pair*>(&p);
 	if (pair) {
-		_a = pair->getA().clone();
-		_b = pair->getB().clone();
-		_stray = pair->_stray ? pair->_stray->clone() : NULL;
+		_a = pair->a().clone();
+		_b = pair->b().clone();
+    if (p->_stray != NULL)
+      _stray = pair->stray().clone();
 	}
+  else {
+    _stray = NULL;
+  }
 	return *this;
 }
 
-bool Pair::operator==(const BasePair* p) const
+bool Pair::operator==(const Pair* p) const
 {
-	const Pair* pair = dynamic_cast<const Pair*>(&p);
-	if (pair) {
-		return (*_a == pair->getA());
-	}
-	return false;
+		return (_max == p->a());
 }
 
-bool Pair::operator!=(const BasePair* p) const
+bool Pair::operator!=(const Pair* p) const
 {
-	const Pair* pair = dynamic_cast<const Pair*>(&p);
-	if (pair) {
-		return (*_a != pair->getA());
-	}
-	return false;
+		return (_max != p->a());
 }
 
-bool Pair::operator<(const BasePair* p) const
+bool Pair::operator<(const Pair* p) const
 {
-	const Pair* pair = dynamic_cast<const Pair*>(&p);
-	if (pair) {
-		return (*_a < pair->getA());
-	}
-	return false;
+		return (_max < p->a());
 }
 
-bool Pair::operator>(const BasePair* p) const
+bool Pair::operator>(const Pair* p) const
 {
-	const Pair* pair = dynamic_cast<const Pair*>(&p);
-	if (pair) {
-		return (*_a > pair->getA());
-	}
-	return false;
+		return (_max > p->a());
 }
 
-bool Pair::operator<=(const BasePair* p) const
+bool Pair::operator<=(const Pair* p) const
 {
-	const Pair* pair = dynamic_cast<const Pair*>(&p);
-	if (pair) {
-		return (*_a <= pair->getA());
-	}
-	return false;
+		return (_max <= p->a());
 }
 
-bool Pair::operator>=(const BasePair* p) const
+bool Pair::operator>=(const Pair* p) const
 {
-	const Pair* pair = dynamic_cast<const Pair*>(&p);
-	if (pair) {
-		return (*_a >= pair->getA());
-	}
-	return false;
+		return (_max >= p->a());
 }
 
 void Pair::sort()
 {
-	if (*_a < *_b)
-	{
-		std::swap(_a, _b);
-	}
+  if (*_a < *_b)
+  {
+    std::swap(_a, _b);
+  }
+  _max = _a->a(); // Update _greatest
+  _min = _b->b(); // Update _smallest
 }

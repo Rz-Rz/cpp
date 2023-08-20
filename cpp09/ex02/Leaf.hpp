@@ -12,9 +12,11 @@ class Leaf : public BasePair {
 		~Leaf();
 
 		void print() const;
-		BasePair *clone() const;
+		SmartPointer<BasePair> clone() const;
 		//Getters Setters
-		long double getValue() const;
+		long double a() const;
+		long double b() const;
+    long double stray() const;
 		void setValue(long double value);
 	
 	private: 

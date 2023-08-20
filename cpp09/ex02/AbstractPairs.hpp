@@ -2,27 +2,32 @@
 #define ABSTRACT_PAIRS_HPP
 
 #include "BasePair.hpp"
+#include "SmartPointer.hpp"
+#include <cstddef>
+#include <iostream>
 
 // Composite class declaration - Pair
 class Pair : public BasePair {
 	private: 
-		BasePair *_a;
-		BasePair *_b;
-		BasePair *_stray;
+		Pair();
+		SmartPointer<BasePair> _a;
+		SmartPointer<BasePair> _b;
+		SmartPointer<BasePair> _stray;
+    long double _max;
+    long double _min;
 
 	public: 
-		Pair();
 		Pair(BasePair *a, BasePair *b);
 		Pair(const Pair &p);
 		~Pair();
 
 		void print() const;
-		BasePair* clone() const;
+		SmartPointer<BasePair> clone() const;
 
 		// Getters
-		BasePair* getA() const;
-		BasePair* getB() const;
-		BasePair* getStray() const;
+		long double a() const;
+		long double b() const;
+		BasePair *stray() const;
 
 		// Setters
 		void setA(BasePair* a);
@@ -31,12 +36,12 @@ class Pair : public BasePair {
 
 		// Operators
 		BasePair &operator=(const BasePair& p);
-		bool operator==(const BasePair* p) const;
-		bool operator!=(const BasePair* p) const;
-		bool operator<(const BasePair* p) const;
-		bool operator>(const BasePair* p) const;
-		bool operator<=(const BasePair* p) const;
-		bool operator>=(const BasePair* p) const;
+		bool operator==(const Pair* p) const;
+		bool operator!=(const Pair* p) const;
+		bool operator<(const Pair* p) const;
+		bool operator>(const Pair* p) const;
+		bool operator<=(const Pair* p) const;
+		bool operator>=(const Pair* p) const;
 
 		// Useful
 		void sort();
