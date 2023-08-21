@@ -15,7 +15,7 @@ FJ_TARGET = test_fj
 LEAF_SRCS = test_leaf.cpp Leaf.cpp
 LEAF_TARGET = test_leaf
 
-ABSTRACT_PAIR_SRCS = test_abstract_pair.cpp AbstractPairs.cpp
+ABSTRACT_PAIR_SRCS = test_abstract_pair.cpp AbstractPairs.cpp Leaf.cpp
 ABSTRACT_PAIR_TARGET = test_abstract_pairs
 
 # Source files and target

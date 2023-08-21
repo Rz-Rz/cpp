@@ -2,11 +2,11 @@
 
 Pair::Pair() : _a(NULL), _b(NULL), _stray(NULL) {};
 
-Pair::Pair(BasePair *a, BasePair *b) : _a(a.clone()), _b(b.clone()), _stray(NULL) {
+Pair::Pair(BasePair *a, BasePair *b) : _a(a->clone()), _b(b->clone()), _stray(NULL) {
   sort();
 };
 
-Pair::Pair(const Pair &p) : _a(p._a.clone()), _b(p._b.clone()), _stray(NULL) {};
+Pair::Pair(const Pair &p) : BasePair(p), _a(p._a->clone()), _b(p._b->clone()), _stray(NULL) {};
 
 Pair::~Pair() { 
 }
@@ -55,10 +55,10 @@ BasePair& Pair::operator=(const BasePair& p)
 		return *this;
 	const Pair* pair = dynamic_cast<const Pair*>(&p);
 	if (pair) {
-		_a = pair->a().clone();
-		_b = pair->b().clone();
-    if (p->_stray != NULL)
-      _stray = pair->stray().clone();
+		_a = pair->_a->clone();
+		_b = pair->_b->clone();
+    if (pair->_stray.operator->() != NULL)
+      _stray = pair->_stray->clone();
 	}
   else {
     _stray = NULL;
@@ -98,7 +98,7 @@ bool Pair::operator>=(const Pair* p) const
 
 void Pair::sort()
 {
-  if (*_a < *_b)
+  if (_a.operator->()->a() < _b.operator->()->a())
   {
     std::swap(_a, _b);
   }
