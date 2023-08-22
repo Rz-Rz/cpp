@@ -6,18 +6,14 @@ Pair::Pair(BasePair *a, BasePair *b) : _a(a->clone()), _b(b->clone()), _stray(NU
   sort();
 };
 
-Pair::Pair(const Pair &p) : BasePair(p), _a(p._a->clone()), _b(p._b->clone()), _stray(NULL) {};
+Pair::Pair(const Pair &p) : BasePair(p), _a(p._a->clone()), _b(p._b->clone()), _stray(NULL), _max(p._max), _min(p._min) {};
 
 Pair::~Pair() { 
 }
 
 void Pair::print() const
 {
-	std::cout << "(";
-	_a->print();
-	std::cout << ", ";
-	_b->print();
-	std::cout << ")";
+  std::cout << "( " << _max << " , " << _min << " )" << std::endl;
 }
 
 void Pair::setStray(BasePair *stray) 
@@ -109,3 +105,9 @@ void Pair::sort()
   _max = _a->a(); // Update _greatest
   _min = _b->b(); // Update _smallest
 }
+
+std::ostream& operator<<(std::ostream& os, const Pair& p) {
+  os << "( " << p.a() << " , " << p.b() << " )";
+  return os;
+}
+

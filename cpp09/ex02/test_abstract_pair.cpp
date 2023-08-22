@@ -164,8 +164,13 @@ void testPairComparisonOperators() {
   }
 }
 
-void testPairPrinting(){
-
+//test the print method
+void testPairPrinting() {
+  Leaf leafA(10.0);
+  Leaf leafB(20.0);
+  Pair pair(&leafA, &leafB);
+  std::cout << "pair is " << pair << std::endl;
+  pair.print();
 }
 
 
@@ -174,7 +179,7 @@ int main()
 	testPairParameterizedConstructor();
 	testPairCopyConstructor();
 	testPairComparisonOperators();
-	// testPairSort();
+  testPairPrinting();
 	return 0;
 }
 

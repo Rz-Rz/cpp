@@ -46,4 +46,6 @@ class Pair : public BasePair {
 		// Useful
 		void sort();
 };
+
+std::ostream& operator<<(std::ostream& os, const Pair& p);
 #endif
