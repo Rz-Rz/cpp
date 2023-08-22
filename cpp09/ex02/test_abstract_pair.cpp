@@ -1,6 +1,7 @@
 #include "AbstractPairs.hpp"
 #include "Leaf.hpp"
 #include <cassert>
+// #include "PmergeMe.hpp"
 
 void testPairParameterizedConstructor() {
   Leaf leafA(10.0);
@@ -168,18 +169,31 @@ void testPairComparisonOperators() {
 void testPairPrinting() {
   Leaf leafA(10.0);
   Leaf leafB(20.0);
+  Leaf leafC(30.0);
+  Leaf leafD(40.0);
   Pair pair(&leafA, &leafB);
-  std::cout << "pair is " << pair << std::endl;
-  pair.print();
+  Pair pair2(&leafC, &leafD);
+  Pair pair3(&pair, &pair2);
+  // std::cout << "pair is " << pair << std::endl;
+  // pair.print();
+  // pair2.print();
+  pair3.print();
 }
 
 
 int main()
 {
-	testPairParameterizedConstructor();
-	testPairCopyConstructor();
-	testPairComparisonOperators();
+	// testPairParameterizedConstructor();
+	// testPairCopyConstructor();
+	// testPairComparisonOperators();
   testPairPrinting();
+
+	// std::vector<int> v;
+	// for (int i = 0; i < 10; i++)
+	// 	v.push_back(i);
+	// std::cout << "Perrine" << std::endl;
+	// ford_johnson(v);
+
 	return 0;
 }
 

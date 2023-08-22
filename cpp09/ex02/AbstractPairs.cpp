@@ -103,7 +103,7 @@ void Pair::sort()
     std::swap(_a, _b);
   }
   _max = _a->a(); // Update _greatest
-  _min = _b->b(); // Update _smallest
+  _min = _b->a(); // Update _smallest
 }
 
 std::ostream& operator<<(std::ostream& os, const Pair& p) {

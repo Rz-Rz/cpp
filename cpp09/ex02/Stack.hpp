@@ -42,7 +42,7 @@ public:
         return stack.back();
     }
 
-	void printStack()
+	void print()
 	{
 		int i = stack.size();
 		while (!stack.empty())
