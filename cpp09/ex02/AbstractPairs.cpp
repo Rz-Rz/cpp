@@ -35,6 +35,10 @@ void Pair::setB(BasePair *b)
 	_b = b; 
 }
 
+SmartPointer<BasePair> Pair::clone() const {
+  return SmartPointer<BasePair>(new Pair(*this));
+}
+
 long double Pair::a() const 
 { 
   return _max;
@@ -66,34 +70,34 @@ BasePair& Pair::operator=(const BasePair& p)
 	return *this;
 }
 
-bool Pair::operator==(const Pair* p) const
+bool Pair::operator==(const Pair& p) const
 {
-		return (_max == p->a());
+		return (_max == p.a());
 }
 
-bool Pair::operator!=(const Pair* p) const
+bool Pair::operator!=(const Pair& p) const
 {
-		return (_max != p->a());
+		return (_max != p.a());
 }
 
-bool Pair::operator<(const Pair* p) const
+bool Pair::operator<(const Pair& p) const
 {
-		return (_max < p->a());
+		return (_max < p.a());
 }
 
-bool Pair::operator>(const Pair* p) const
+bool Pair::operator>(const Pair& p) const
 {
-		return (_max > p->a());
+		return (_max > p.a());
 }
 
-bool Pair::operator<=(const Pair* p) const
+bool Pair::operator<=(const Pair& p) const
 {
-		return (_max <= p->a());
+		return (_max <= p.a());
 }
 
-bool Pair::operator>=(const Pair* p) const
+bool Pair::operator>=(const Pair& p) const
 {
-		return (_max >= p->a());
+		return (_max >= p.a());
 }
 
 void Pair::sort()

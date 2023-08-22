@@ -36,12 +36,12 @@ class Pair : public BasePair {
 
 		// Operators
 		BasePair &operator=(const BasePair& p);
-		bool operator==(const Pair* p) const;
-		bool operator!=(const Pair* p) const;
-		bool operator<(const Pair* p) const;
-		bool operator>(const Pair* p) const;
-		bool operator<=(const Pair* p) const;
-		bool operator>=(const Pair* p) const;
+		bool operator==(const Pair& p) const;
+		bool operator!=(const Pair& p) const;
+		bool operator<(const Pair& p) const;
+		bool operator>(const Pair& p) const;
+		bool operator<=(const Pair& p) const;
+		bool operator>=(const Pair& p) const;
 
 		// Useful
 		void sort();
