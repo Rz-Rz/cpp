@@ -49,7 +49,8 @@ public:
 		{
 			T topElement = top();
 			std::cout << "Level of Simulated recursion: " << i << std::endl;
-			Printer<T>::print(std::cout, topElement);
+      for (int j = 0; j < topElement.size(); j++)
+        std::cout << topElement[j] << " ";
 			std::cout << std::endl;
 			i--;
 			pop();

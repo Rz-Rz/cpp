@@ -157,31 +157,3 @@ void printArray(int A[], int size)
     std::cout << std::endl;
 }
 
-std::vector<long double> ford_johnson(std::vector<long double> &unsorted_list)
-{
-  Stack<std::vector<Pair>> stack;
-  long double stray;
-  int stop = unsorted_list.size();
-
-  //create a while loop that will run until the list is sorted
-  while (stop >= 2)
-  {
-    // Create a new vector that will hold pairs
-    std::vector<Pair> newVector(unsorted_list.size() / 2);
-    //save the last element if the list is odd
-    if (stop % 2 == 1)
-      stray = &unsorted_list.back();
-    Pair newPair;
-    for (unsigned long i = 0; i < unsorted_list.size() / 2; i++)
-    {
-      newPair = Pair(unsorted_list[i * 2], unsorted_list[i * 2 + 1]);
-      //Add the new pair to the new vector
-      newVector[i] = newPair;
-    }
-    unsorted_list = newVector;
-    stop /= 2;
-		//The vector is full of pairs, we can simulate the behaviour of a recursive call by pushing it in a stack.
-    stack.push(newVector);
-  }
-  stack.print();
-}
