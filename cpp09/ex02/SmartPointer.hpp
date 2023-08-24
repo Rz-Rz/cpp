@@ -2,6 +2,7 @@
 #define SMARTPOINTER_HPP
 
 #include "ReferenceCounter.hpp"
+#include <iostream>
 
 template <typename T> class SmartPointer
 {
@@ -78,4 +79,11 @@ template <typename T> class SmartPointer
       return *this;
     }
 };
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const SmartPointer<T>& sp) {
+    os << *(sp.operator->());
+    return os;
+}
+
 #endif

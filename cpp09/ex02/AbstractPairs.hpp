@@ -9,7 +9,6 @@
 // Composite class declaration - Pair
 class Pair : public BasePair {
 	private: 
-		Pair();
 		SmartPointer<BasePair> _a;
 		SmartPointer<BasePair> _b;
 		SmartPointer<BasePair> _stray;
@@ -17,6 +16,7 @@ class Pair : public BasePair {
     long double _min;
 
 	public: 
+		Pair();
 		Pair(BasePair *a, BasePair *b);
 		Pair(const Pair &p);
 		~Pair();

@@ -49,8 +49,11 @@ public:
 		{
 			T topElement = top();
 			std::cout << "Level of Simulated recursion: " << i << std::endl;
-      for (int j = 0; j < topElement.size(); j++)
-        std::cout << topElement[j] << " ";
+      for (unsigned long j = 0; j < topElement.size(); j++)
+      {
+        std::cout << "Pair " << j << ": ";
+        topElement[j].operator->()->print();
+      }
 			std::cout << std::endl;
 			i--;
 			pop();

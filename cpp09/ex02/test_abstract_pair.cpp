@@ -183,28 +183,50 @@ void testPairPrinting() {
   pair3.print();
 }
 
-std::vector<long double> ford_johnson(std::vector<long double> &unsorted_list)
+//long double to base pair vector
+std::vector<SmartPointer<BasePair> > longDoubleToPairVector(std::vector<long double> &unsorted_list)
 {
-  Stack<std::vector<Pair>> stack;
-  long double stray;
+  std::vector<SmartPointer<BasePair> > pairVector(unsorted_list.size());
+  for (unsigned long i = 0; i < unsorted_list.size(); i++)
+  {
+    pairVector[i] = SmartPointer<BasePair>(new Leaf(unsorted_list[i]));
+  }
+  return pairVector;
+}
+
+void ford_johnson(std::vector<long double> &unsorted_list)
+{
+  Stack<std::vector<SmartPointer<BasePair> > > stack;
+  SmartPointer<BasePair> stray;
   int stop = unsorted_list.size();
+  std::vector<SmartPointer<BasePair> > pairVector = longDoubleToPairVector(unsorted_list);
 
   //create a while loop that will run until the list is sorted
   while (stop >= 2)
   {
     // Create a new vector that will hold pairs
-    std::vector<Pair> newVector(unsorted_list.size() / 2);
+    std::vector<SmartPointer<BasePair> > newVector(pairVector.size() / 2);
     //save the last element if the list is odd
-    if (stop % 2 == 1)
-      stray = &unsorted_list.back();
-    Pair newPair;
-    for (unsigned long i = 0; i < unsorted_list.size() / 2; i++)
+    if (pairVector.size() % 2 == 1)
     {
-      newPair = Pair(unsorted_list[i * 2], unsorted_list[i * 2 + 1]);
+      std::cout << "stray" << std::endl;
+      stray = pairVector.back();
+    }
+    SmartPointer<BasePair> newPair;
+    for (unsigned long i = 0; i < pairVector.size() / 2; i++)
+    {
+      if ((i + 1 == pairVector.size()) && (pairVector.size() % 2 == 1))
+      {
+        std::cout << "stray 2" << std::endl;
+        newPair = SmartPointer<BasePair>(new Pair(pairVector[i * 2].operator->(), stray.operator->()));
+        pairVector.pop_back();
+      }
+      else
+        newPair = SmartPointer<BasePair>(new Pair(pairVector[i * 2].operator->(), pairVector[i * 2 + 1].operator->()));
       //Add the new pair to the new vector
       newVector[i] = newPair;
     }
-    unsorted_list = newVector;
+    pairVector = newVector;
     stop /= 2;
 		//The vector is full of pairs, we can simulate the behaviour of a recursive call by pushing it in a stack.
     stack.push(newVector);
@@ -219,7 +241,7 @@ int main()
 	// testPairComparisonOperators();
   // testPairPrinting();
 
-	std::vector<int> v;
+	std::vector<long double> v;
 	for (int i = 0; i < 10; i++)
 		v.push_back(i);
 	ford_johnson(v);

@@ -13,7 +13,10 @@ Pair::~Pair() {
 
 void Pair::print() const
 {
-  std::cout << "( " << _max << " , " << _min << " )" << std::endl;
+  std::cout << "( " << _max << " , " << _min << " )";
+  if (_stray.operator->() != NULL)
+    std::cout << " stray: " << _stray->a();
+  std::cout << std::endl;
 }
 
 void Pair::setStray(BasePair *stray) 
