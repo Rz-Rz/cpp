@@ -6,6 +6,10 @@ Pair::Pair(BasePair *a, BasePair *b) : _a(a->clone()), _b(b->clone()), _stray(NU
   sort();
 };
 
+Pair::Pair(BasePair *a, BasePair *b, BasePair *_stray) : _a(a->clone()), _b(b->clone()), _stray(_stray->clone()) {
+  sort();
+};
+
 Pair::Pair(const Pair &p) : BasePair(p), _a(p._a->clone()), _b(p._b->clone()), _stray(NULL), _max(p._max), _min(p._min) {};
 
 Pair::~Pair() { 

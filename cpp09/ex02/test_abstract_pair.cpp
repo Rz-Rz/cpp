@@ -207,18 +207,19 @@ void ford_johnson(std::vector<long double> &unsorted_list)
     // Create a new vector that will hold pairs
     std::vector<SmartPointer<BasePair> > newVector(pairVector.size() / 2);
     //save the last element if the list is odd
-    if (pairVector.size() % 2 == 1)
-    {
-      std::cout << "stray" << std::endl;
-      stray = pairVector.back();
-    }
+    // if (pairVector.size() % 2 == 1)
+    // {
+    //   std::cout << "stray" << std::endl;
+    //   stray = pairVector.back();
+    // }
     SmartPointer<BasePair> newPair;
     for (unsigned long i = 0; i < pairVector.size() / 2; i++)
     {
-      if ((i + 1 == pairVector.size()) && (pairVector.size() % 2 == 1))
+      if (i + 1 == pairVector.size() / 2 && pairVector.size() % 2 == 1)
       {
+      stray = pairVector.back();
         std::cout << "stray 2" << std::endl;
-        newPair = SmartPointer<BasePair>(new Pair(pairVector[i * 2].operator->(), stray.operator->()));
+        newPair = SmartPointer<BasePair>(new Pair(pairVector[i * 2].operator->(), pairVector[i * 2 + 1].operator->(), stray.operator->()));
         pairVector.pop_back();
       }
       else

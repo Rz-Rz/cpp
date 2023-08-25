@@ -18,6 +18,7 @@ class Pair : public BasePair {
 	public: 
 		Pair();
 		Pair(BasePair *a, BasePair *b);
+		Pair(BasePair *a, BasePair *b, BasePair *stray);
 		Pair(const Pair &p);
 		~Pair();
 
