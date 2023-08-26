@@ -57,6 +57,11 @@ template <typename T> class SmartPointer
       return pData;
     }
 
+    T* get() const 
+    {
+      return pData;
+    }
+
     SmartPointer<T>& operator = (const SmartPointer<T>& sp)
     {
       // Assignment operator

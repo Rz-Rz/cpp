@@ -16,8 +16,10 @@ class Leaf : public BasePair {
 		//Getters Setters
 		long double a() const;
 		long double b() const;
+    long double s() const;
     long double stray() const;
 		void setValue(long double value);
+    bool is_stray() const;
 	
 	private: 
 		long double _value;

@@ -1,7 +1,9 @@
 #ifndef ABSTRACT_PAIRS_HPP
 #define ABSTRACT_PAIRS_HPP
 
+#include "Stack.hpp"
 #include "BasePair.hpp"
+#include <vector>
 #include "SmartPointer.hpp"
 #include <cstddef>
 #include <iostream>
@@ -28,7 +30,10 @@ class Pair : public BasePair {
 		// Getters
 		long double a() const;
 		long double b() const;
+    long double s() const;
 		BasePair *stray() const;
+
+    bool is_stray() const;
 
 		// Setters
 		void setA(BasePair* a);
@@ -49,4 +54,7 @@ class Pair : public BasePair {
 };
 
 std::ostream& operator<<(std::ostream& os, const Pair& p);
+std::vector<long double> insertPairs(Stack<std::vector<SmartPointer<BasePair> > > &stack);
+void ford_johnson(std::vector<long double> &unsorted_list);
+void printMain(std::vector<long double> mainChain);
 #endif

@@ -10,6 +10,8 @@ class BasePair {
 		virtual ~BasePair() {}
     virtual long double a() const = 0;
     virtual long double b() const = 0;
+    virtual long double s() const = 0;
+    virtual bool is_stray() const = 0;
 	protected:
 		BasePair(const BasePair &/*p*/) {};
 		BasePair& operator=(const BasePair &p);

@@ -25,10 +25,18 @@ long double Leaf::a() const {
 	return _value;
 }
 
+long double Leaf::s() const {
+  return _value;
+}
+
 long double Leaf::stray() const {
 	return _value;
 }
 
 void Leaf::setValue(long double value) {
 	_value = value;
+}
+
+bool Leaf::is_stray() const {
+  return false;
 }

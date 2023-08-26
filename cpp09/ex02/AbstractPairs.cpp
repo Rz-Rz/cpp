@@ -23,6 +23,11 @@ void Pair::print() const
   std::cout << std::endl;
 }
 
+bool Pair::is_stray() const
+{
+  return _stray.operator->() != NULL;
+}
+
 void Pair::setStray(BasePair *stray) 
 {
 	_stray = stray; 
@@ -51,9 +56,14 @@ long double Pair::b() const
   return _min;
 }
 
-BasePair* Pair::stray() const 
+long double Pair::s() const 
 { 
-	return _stray.operator->();
+  return _stray->a();
+}
+
+BasePair *Pair::stray() const 
+{ 
+	return _stray.get();
 }
 
 BasePair& Pair::operator=(const BasePair& p)
