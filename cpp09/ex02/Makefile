@@ -9,7 +9,7 @@ TEST_TARGET = test_pairs
 STACK_SRCS = test_stack.cpp
 STACK_TARGET = test_stack
 
-FJ_SRCS = test_fj.cpp
+FJ_SRCS = test_fj.cpp Leaf.cpp AbstractPairs.cpp
 FJ_TARGET = test_fj
 
 LEAF_SRCS = test_leaf.cpp Leaf.cpp
