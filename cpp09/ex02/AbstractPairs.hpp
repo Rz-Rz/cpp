@@ -27,6 +27,11 @@ class Pair : public BasePair {
 		void print() const;
 		SmartPointer<BasePair> clone() const;
 
+    bool a_processed_state() const;
+    bool b_processed_state() const;
+    void a_was_processed();
+    void b_was_processed();
+
 		// Getters
 		long double a() const;
 		long double b() const;

@@ -18,10 +18,15 @@ class Leaf : public BasePair {
 		long double b() const;
     long double s() const;
     long double stray() const;
+    bool a_processed_state() const;
+    bool b_processed_state() const;
+    void a_was_processed();
+    void b_was_processed();
 		void setValue(long double value);
     bool is_stray() const;
 	
 	private: 
 		long double _value;
+    bool _processed;
 };
 #endif

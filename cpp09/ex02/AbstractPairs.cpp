@@ -28,6 +28,26 @@ bool Pair::is_stray() const
   return _stray.operator->() != NULL;
 }
 
+bool Pair::a_processed_state() const
+{
+  return _a->a_processed_state();
+}
+
+bool Pair::b_processed_state() const
+{
+  return _b->b_processed_state();
+}
+
+void Pair::a_was_processed()
+{
+  _a->a_was_processed();
+}
+
+void Pair::b_was_processed()
+{
+  _b->b_was_processed();
+}
+
 void Pair::setStray(BasePair *stray) 
 {
 	_stray = stray; 

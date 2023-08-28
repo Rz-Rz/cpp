@@ -169,15 +169,42 @@ void testPairComparisonOperators() {
   }
 }
 
+void testLeafProcessedState() {
+    Leaf leafA(10.0);
+    Leaf leafB(20.0);
+    Pair pair(&leafA, &leafB);
+
+    // Initial state: none of the leaves should be processed.
+    assert(!pair.a_processed_state());
+    assert(!pair.b_processed_state());
+
+    // Marking a as processed
+    pair.a_was_processed();
+    assert(pair.a_processed_state());  // a should be processed now
+    assert(!pair.b_processed_state()); // b should still be unprocessed
+
+    // Marking b as processed
+    pair.b_was_processed();
+    assert(pair.a_processed_state());  // a should be processed
+    assert(pair.b_processed_state());  // b should be processed now
+}
+
+
 //test the print method
 void testPairPrinting() {
   Leaf leafA(10.0);
   Leaf leafB(20.0);
   Leaf leafC(30.0);
   Leaf leafD(40.0);
+  Leaf leafX(30.0);
+  Leaf leafZ(40.0);
   Pair pair(&leafA, &leafB);
   Pair pair2(&leafC, &leafD);
-  Pair pair3(&pair, &pair2);
+  Pair pair3(&leafX, &leafZ);
+  Pair pairx($leafA, &leafZ);
+  Pair pair4(&pair, &pair2);
+  Pair pair5(&pair3, &pairx);
+  Pair pair6(&pair4, &pair5);
   // std::cout << "pair is " << pair << std::endl;
   // pair.print();
   // pair2.print();
@@ -190,13 +217,14 @@ int main()
 	// testPairCopyConstructor();
 	// testPairComparisonOperators();
   // testPairPrinting();
+  testLeafProcessedState();
 
 	// std::vector<long double> v = {7, 8, 5, 9, 11, 0, 2, 1, 10, 3, 4, 6};
-  long double arr[] = {7, 8, 5, 9, 11, 0, 2, 1, 10, 3, 4, 6};
-  std::vector<long double> v;
-  v.insert(v.end(), arr, arr + sizeof(arr)/sizeof(arr[0]));
+  // long double arr[] = {7, 8, 5, 9, 11, 0, 2, 1, 10, 3, 4, 6};
+  // std::vector<long double> v;
+  // v.insert(v.end(), arr, arr + sizeof(arr)/sizeof(arr[0]));
 	// for (int i = 0; i < 10; i++)
 	// 	v.push_back(i);
-	ford_johnson(v);
+	// ford_johnson(v);
 	return 0;
 }
