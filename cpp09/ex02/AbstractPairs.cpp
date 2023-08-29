@@ -2,18 +2,17 @@
 
 Pair::Pair() : _a(NULL), _b(NULL), _stray(NULL) {};
 
-Pair::Pair(BasePair *a, BasePair *b) : _a(a->clone()), _b(b->clone()), _stray(NULL) {
+Pair::Pair(BasePair& a, BasePair& b) : _a(a.getLeafA()), _b(b.getLeafA()), _stray(NULL) {
   sort();
 };
 
-Pair::Pair(BasePair *a, BasePair *b, BasePair *_stray) : _a(a->clone()), _b(b->clone()), _stray(_stray->clone()) {
+Pair::Pair(BasePair& a, BasePair& b, SmartPointer<BasePair>& _stray) : _a(a.getLeafA()), _b(b.getLeafA()), _stray(_stray) {
   sort();
 };
 
-Pair::Pair(const Pair &p) : BasePair(p), _a(p._a->clone()), _b(p._b->clone()), _stray(NULL), _max(p._max), _min(p._min) {};
+Pair::Pair(const Pair &p) : BasePair(p), _a(p._a), _b(p._b), _stray(NULL), _max(p._max), _min(p._min) {};
 
-Pair::~Pair() { 
-}
+Pair::~Pair() {}
 
 void Pair::print() const
 {
@@ -21,6 +20,22 @@ void Pair::print() const
   if (_stray.operator->() != NULL)
     std::cout << " stray: " << _stray->a();
   std::cout << std::endl;
+}
+
+void Pair::getRefCount() const
+{
+  std::cout << "_a RefCount: " << _a.referenceCount() << std::endl;
+  std::cout << "_b RefCount: " << _b.referenceCount() << std::endl;
+  if (_stray.operator->() != NULL)
+    std::cout << "_stray RefCount: " << _stray.referenceCount() << std::endl;
+}
+
+SmartPointer<BasePair> Pair::getLeafA() const {
+    return _a->getLeafA();  // Return the leaf from the A member
+}
+
+SmartPointer<BasePair> Pair::getLeafB() const {
+    return _b->getLeafB();  // Return the leaf from the B member
 }
 
 bool Pair::is_stray() const
@@ -135,7 +150,7 @@ bool Pair::operator>=(const Pair& p) const
 
 void Pair::sort()
 {
-  if (_a.operator->()->a() < _b.operator->()->a())
+  if (_a->a() < _b->a())
   {
     std::swap(_a, _b);
   }

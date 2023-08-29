@@ -24,6 +24,9 @@ class Leaf : public BasePair {
     void b_was_processed();
 		void setValue(long double value);
     bool is_stray() const;
+    virtual SmartPointer<BasePair> getLeafA() const;
+    virtual SmartPointer<BasePair> getLeafB() const;
+
 	
 	private: 
 		long double _value;

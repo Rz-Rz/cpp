@@ -16,6 +16,9 @@ class BasePair {
     virtual bool b_processed_state() const = 0;
     virtual void a_was_processed() = 0;
     virtual void b_was_processed() = 0;
+    virtual SmartPointer<BasePair> getLeafA() const = 0;
+    virtual SmartPointer<BasePair> getLeafB() const = 0;
+
 	protected:
 		BasePair(const BasePair &/*p*/) {};
 		BasePair& operator=(const BasePair &p);

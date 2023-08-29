@@ -10,10 +10,17 @@ class ReferenceCounter
     ReferenceCounter() : count(0)
     {
     }
+
     void AddRef()
     {
       // Increment the reference count
       count++;
+    }
+
+    int getCount() const
+    {
+      // Return the reference count.
+      return count;
     }
     
     int Release()

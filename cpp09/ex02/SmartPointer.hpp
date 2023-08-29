@@ -62,6 +62,11 @@ template <typename T> class SmartPointer
       return pData;
     }
 
+    int referenceCount() const
+    {
+      return reference->getCount();
+    }
+
     SmartPointer<T>& operator = (const SmartPointer<T>& sp)
     {
       // Assignment operator
