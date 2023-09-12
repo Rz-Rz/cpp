@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -g3 -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -g3 -std=c++98 -MMD
 
 # Test source files and target
 TEST_SRCS = test_pairs.cpp

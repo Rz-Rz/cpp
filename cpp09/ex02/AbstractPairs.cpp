@@ -6,7 +6,7 @@ Pair::Pair(BasePair& a, BasePair& b) : _a(a.getLeafA()), _b(b.getLeafA()), _stra
   sort();
 };
 
-Pair::Pair(BasePair& a, BasePair& b, SmartPointer<BasePair>& _stray) : _a(a.getLeafA()), _b(b.getLeafA()), _stray(_stray) {
+Pair::Pair(BasePair& a, BasePair& b, BasePair& _stray) : _a(a.getLeafA()), _b(b.getLeafA()), _stray(_stray.getLeafA()) {
   sort();
 };
 
@@ -17,30 +17,22 @@ Pair::~Pair() {}
 void Pair::print() const
 {
   std::cout << "( " << _max << " , " << _min << " )";
-  if (_stray.operator->() != NULL)
+  if (_stray != NULL)
     std::cout << " stray: " << _stray->a();
   std::cout << std::endl;
 }
 
-void Pair::getRefCount() const
-{
-  std::cout << "_a RefCount: " << _a.referenceCount() << std::endl;
-  std::cout << "_b RefCount: " << _b.referenceCount() << std::endl;
-  if (_stray.operator->() != NULL)
-    std::cout << "_stray RefCount: " << _stray.referenceCount() << std::endl;
-}
-
-SmartPointer<BasePair> Pair::getLeafA() const {
+BasePair* Pair::getLeafA() {
     return _a->getLeafA();  // Return the leaf from the A member
 }
 
-SmartPointer<BasePair> Pair::getLeafB() const {
+BasePair* Pair::getLeafB() {
     return _b->getLeafB();  // Return the leaf from the B member
 }
 
 bool Pair::is_stray() const
 {
-  return _stray.operator->() != NULL;
+  return _stray->getLeafA() != NULL;
 }
 
 bool Pair::a_processed_state() const
@@ -78,10 +70,6 @@ void Pair::setB(BasePair *b)
 	_b = b; 
 }
 
-SmartPointer<BasePair> Pair::clone() const {
-  return SmartPointer<BasePair>(new Pair(*this));
-}
-
 long double Pair::a() const 
 { 
   return _max;
@@ -98,24 +86,24 @@ long double Pair::s() const
 
 BasePair *Pair::stray() const 
 { 
-	return _stray.get();
+	return _stray->getLeafA();
 }
 
 BasePair& Pair::operator=(const BasePair& p)
 {
-	if (this == &p)
-		return *this;
-	const Pair* pair = dynamic_cast<const Pair*>(&p);
-	if (pair) {
-		_a = pair->_a->clone();
-		_b = pair->_b->clone();
-    if (pair->_stray.operator->() != NULL)
-      _stray = pair->_stray->clone();
-	}
+  if (this == &p)
+    return *this;
+  const Pair* pair = dynamic_cast<const Pair*>(&p);
+  if (pair) {
+    _a = pair->_a->getLeafA();
+    _b = pair->_b->getLeafB();
+    if (pair->_stray->getLeafA() != NULL)
+      _stray = pair->_stray->getLeafA();
+  }
   else {
     _stray = NULL;
   }
-	return *this;
+  return *this;
 }
 
 bool Pair::operator==(const Pair& p) const

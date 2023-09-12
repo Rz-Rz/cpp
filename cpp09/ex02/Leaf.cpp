@@ -13,16 +13,12 @@ void Leaf::print() const {
 	std::cout << _value;
 }
 
-SmartPointer<BasePair> Leaf::getLeafA() const {
-    return SmartPointer<BasePair>(const_cast<Leaf*>(this));  // Using const_cast because 'this' is const in a const member function
+BasePair* Leaf::getLeafA() {
+    return this;
 }
 
-SmartPointer<BasePair> Leaf::getLeafB() const {
-    return SmartPointer<BasePair>(const_cast<Leaf*>(this));  // Same reasoning here
-}
-
-SmartPointer<BasePair> Leaf::clone() const {
-	return SmartPointer<BasePair>(new Leaf(*this));
+BasePair* Leaf::getLeafB() {
+    return this;  // Same reasoning here
 }
 
 long double Leaf::b() const {
