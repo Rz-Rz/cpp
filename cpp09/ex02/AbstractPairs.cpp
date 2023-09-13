@@ -32,7 +32,7 @@ BasePair* Pair::getLeafB() {
 
 bool Pair::is_stray() const
 {
-  return _stray->getLeafA() != NULL;
+  return _stray != NULL;
 }
 
 bool Pair::a_processed_state() const

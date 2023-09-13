@@ -26,7 +26,7 @@ class Pair : public BasePair {
 
 		void print() const;
 
-    BasePair* getLeafA();
+    BasePair* getLeafA() ;
     BasePair* getLeafB();
 
     bool a_processed_state() const;

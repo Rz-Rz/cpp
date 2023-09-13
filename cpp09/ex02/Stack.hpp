@@ -52,7 +52,7 @@ public:
       for (unsigned long j = 0; j < topElement.size(); j++)
       {
         std::cout << "Pair " << j << ": ";
-        topElement[j].operator->()->print();
+        topElement[j]->print();
       }
 			std::cout << std::endl;
 			i--;
