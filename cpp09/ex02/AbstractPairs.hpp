@@ -31,8 +31,10 @@ class Pair : public BasePair {
 
     bool a_processed_state() const;
     bool b_processed_state() const;
+    bool s_processed_state() const;
     void a_was_processed();
     void b_was_processed();
+    void s_was_processed();
 
 		// Getters
 		long double a() const;

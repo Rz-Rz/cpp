@@ -71,8 +71,8 @@ void ford_johnson(std::vector<long double> &unsorted_list)
     //The vector is full of pairs, we can simulate the behaviour of a recursive call by pushing it in a stack.
     stack.push(newVector);
   }
-  // Stack<std::vector<BasePair*> > check = stack;
-  // check.print();
+  Stack<std::vector<BasePair*> > check = stack;
+  check.print();
 
   insertPairs(stack);
 }
@@ -87,19 +87,24 @@ std::vector<long double> insertPairs(Stack<std::vector<BasePair*> > &stack)
   std::vector<long double> mainChain;
 
   //work with the different list of pairs in the stack
+  std::vector<BasePair*> pairVector = stack.top();
+  stack.pop();
+  mainChain.push_back(pairVector[0]->b());
+  pairVector[0]->b_was_processed();
+  mainChain.push_back(pairVector[0]->a());
+  pairVector[0]->a_was_processed();
+  if (J_upper == static_cast<int>(pairVector.size()) && pairVector.back()->is_stray())
+  {
+    pos = binarySearch(mainChain.begin(), mainChain.end(), pairVector.back()->s());
+    mainChain.insert(pos, pairVector.back()->s()); 
+    pairVector.back()->s_was_processed();
+  }
+  printMain(mainChain);
   while (!stack.isEmpty())
   {
     std::vector<BasePair*> pairVector = stack.top();
     stack.pop();
     // mainChain 
-    mainChain.push_back(pairVector[0]->b());
-    mainChain.push_back(pairVector[0]->a());
-    if (J_upper == static_cast<int>(pairVector.size()) && pairVector.back()->is_stray())
-    {
-      pos = binarySearch(mainChain.begin(), mainChain.end(), pairVector.back()->s());
-      mainChain.insert(pos, pairVector.back()->s()); 
-    }
-    printMain(mainChain);
     std::cout << "pairVector size is " << pairVector.size() << std::endl;
     while (J_upper < static_cast<int>(pairVector.size()))
     {
@@ -113,7 +118,12 @@ std::vector<long double> insertPairs(Stack<std::vector<BasePair*> > &stack)
 
       // Insert all A's into the mainchain
       for (int i = J_lower; i < J_upper; i++)
-        mainChain.push_back(pairVector[i]->a());
+      {
+        if (pairVector[i]->a_processed_state())
+          continue;
+        else
+          mainChain.push_back(pairVector[i]->a());
+      }
       //first insert stray if it exists
       // std::cout << "checking stray again. PairVector size is " << pairVector.size() << std::endl;
       if (pairVector.back()->is_stray() && J_upper == static_cast<int>(pairVector.size()))
@@ -124,12 +134,17 @@ std::vector<long double> insertPairs(Stack<std::vector<BasePair*> > &stack)
       // Insert all B's into the mainChain
       for (int i = J_upper - 1; i >= J_lower; i--)
       {
-        if (J_upper == static_cast<int>(pairVector.size()))
-          last = mainChain.end();
-        else
-          last = mainChain.begin() + J_upper + J_lower - 1;
-        pos = binarySearch(mainChain.begin(), last, pairVector[i]->b());
-        mainChain.insert(pos, pairVector[i]->b());
+        if (pairVector[i]->b_processed_state())
+          continue;
+        else 
+        {
+          if (J_upper == static_cast<int>(pairVector.size()))
+            last = mainChain.end();
+          else
+            last = mainChain.begin() + J_upper + J_lower - 1;
+          pos = binarySearch(mainChain.begin(), last, pairVector[i]->b());
+          mainChain.insert(pos, pairVector[i]->b());
+        }
       }
       // std::cout << "main chain after inserting all b's is " << std::endl;
       // printMain(mainChain);

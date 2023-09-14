@@ -45,6 +45,11 @@ bool Pair::b_processed_state() const
   return _b->b_processed_state();
 }
 
+bool Pair::s_processed_state() const
+{
+  return _stray->a_processed_state();
+}
+
 void Pair::a_was_processed()
 {
   _a->a_was_processed();
@@ -53,6 +58,11 @@ void Pair::a_was_processed()
 void Pair::b_was_processed()
 {
   _b->b_was_processed();
+}
+
+void Pair::s_was_processed()
+{
+  _stray->a_was_processed();
 }
 
 void Pair::setStray(BasePair *stray) 

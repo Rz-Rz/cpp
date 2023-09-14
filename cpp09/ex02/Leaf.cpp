@@ -49,11 +49,19 @@ void Leaf::b_was_processed() {
   _processed = true;
 }
 
+void Leaf::s_was_processed() {
+  _processed = true;
+}
+
 bool Leaf::a_processed_state() const {
   return _processed;
 }
 
 bool Leaf::b_processed_state() const {
+  return _processed;
+}
+
+bool Leaf::s_processed_state() const {
   return _processed;
 }
 

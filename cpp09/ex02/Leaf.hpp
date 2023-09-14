@@ -23,8 +23,10 @@ class Leaf : public BasePair {
     // Processed state to avoid duplicate processing
     bool a_processed_state() const;
     bool b_processed_state() const;
+    bool s_processed_state() const;
     void a_was_processed();
     void b_was_processed();
+    void s_was_processed();
     // 
     bool is_stray() const;
 

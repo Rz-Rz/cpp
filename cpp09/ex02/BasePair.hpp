@@ -13,8 +13,10 @@ public:
     virtual bool is_stray() const = 0;
     virtual bool a_processed_state() const = 0;
     virtual bool b_processed_state() const = 0;
+    virtual bool s_processed_state() const = 0;
     virtual void a_was_processed() = 0;
     virtual void b_was_processed() = 0;
+    virtual void s_was_processed() = 0;
     virtual BasePair* getLeafA() = 0;
     virtual BasePair* getLeafB() = 0;
 
