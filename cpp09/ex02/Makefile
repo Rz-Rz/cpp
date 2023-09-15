@@ -6,6 +6,9 @@ CXXFLAGS = -Wall -Wextra -Werror -g3 -std=c++98 -MMD
 TEST_SRCS = test_pairs.cpp
 TEST_TARGET = test_pairs
 
+TEST_IT_SRCS = test_it.cpp
+IT_TARGET = test_it
+
 STACK_SRCS = test_stack.cpp
 STACK_TARGET = test_stack
 
@@ -29,6 +32,7 @@ STACK_OBJS = $(STACK_SRCS:.cpp=.o)
 FJ_OBJS = $(FJ_SRCS:.cpp=.o)
 LEAF_OBJS = $(LEAF_SRCS:.cpp=.o)
 ABSTRACT_PAIR_OBJS = $(ABSTRACT_PAIR_SRCS:.cpp=.o)
+TEST_IT_OBJS = $(TEST_IT_SRCS:.cpp=.o)
 
 # Default rule: build the target
 all: $(TARGET)
@@ -41,6 +45,9 @@ $(TARGET): $(OBJS)
 test: $(TEST_OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TEST_TARGET) $^
 	./$(TEST_TARGET)
+
+test_it: $(TEST_IT_OBJS)
+	$(CXX) $(CXXFLAGS) -o $(IT_TARGET) $^
 
 stack: $(STACK_OBJS)
 	$(CXX) $(CXXFLAGS) -o $(STACK_TARGET) $^
@@ -71,6 +78,7 @@ clean:
 	rm -f $(FJ_OBJS)
 	rm -f $(LEAF_OBJS)
 	rm -f $(ABSTRACT_PAIR_OBJS)
+	rm -f $(TEST_IT_OBJS)
 
 fclean: clean
 	rm -f $(TARGET)
@@ -79,6 +87,7 @@ fclean: clean
 	rm -f $(FJ_TARGET)
 	rm -f $(LEAF_TARGET)
 	rm -f $(ABSTRACT_PAIR_TARGET)
+	rm -f $(IT_TARGET)
 
 re: fclean all
 
