@@ -33,10 +33,18 @@ class IterativePair
     }
    void print_all()
     {
-      if (!_p1 || !_p2 )
+      if ((!_p1 || !_p2) && _alone) {
+        std::cout << _value;
         return;
+      }
       if (_p1->_alone && _p2->_alone)
-        std::cout << "(" << _p1->getValue() << "," << _p2->getValue() << ")";
+      {
+        std::cout << "(";
+        _p1->print_all();
+        std::cout << ",";
+        _p2->print_all();
+        std::cout << ")";
+      }
       else {
         std::cout << "{";
         _p1->print_all();
