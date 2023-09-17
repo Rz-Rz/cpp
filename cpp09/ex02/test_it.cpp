@@ -1,21 +1,18 @@
 #include "IterativePair.hpp"
+#include <memory> // for std::auto_ptr
 #include <vector>
 #include <queue>
 #include <iostream>
+#include <algorithm>
+#include <ctime>
+#include <sys/time.h>
 
-static const unsigned long jacobsthal_diff[] = {
-2u, 6u, 10u, 22u, 42u, 86u, 170u, 342u, 682u, 1366u,
-2730u, 5462u, 10922u, 21846u, 43690u, 87382u, 174762u, 349526u, 699050u,
-1398102u, 2796202u, 5592406u, 11184810u, 22369622u, 44739242u, 89478486u,
-178956970u, 357913942u, 715827882u, 1431655766u, 2863311530u, 5726623062u,
-11453246122u, 22906492246u, 45812984490u, 91625968982u, 183251937962u,
-366503875926u, 733007751850u, 1466015503702u, 2932031007402u, 5864062014806u,
-11728124029610u, 23456248059222u, 46912496118442u, 93824992236886u, 187649984473770u,
-375299968947542u, 750599937895082u, 1501199875790165u, 3002399751580331u,
-6004799503160661u, 12009599006321322u, 24019198012642644u, 48038396025285288u,
-96076792050570576u, 192153584101141152u, 384307168202282304u, 768614336404564608u,
-1537228672809129216u, 3074457345618258432u, 6148914691236516864u
-};
+void	printDuration(std::clock_t time, std::string container, unsigned long range)
+{
+	std::cout << "Time to process a range of " << range << " elements ";
+	std::cout << "with std::" << container << " : ";
+	std::cout << ((double) time / (CLOCKS_PER_SEC / 1000000) ) << " us" << std::endl;
+}
 
 template <typename V>
 typename std::vector<V>::iterator binarySearch(typename std::vector<V>::iterator first, typename std::vector<V>::iterator last, V val)
@@ -34,69 +31,96 @@ typename std::vector<V>::iterator binarySearch(typename std::vector<V>::iterator
         return last;
 }
 
-std::vector <IterativePair<int> > insertPairs(std::vector<IterativePair<int> > &v, IterativePair<int> *s)
+int Jacobsthal_n(int Jacobsthal_n_1, int Jacobsthal_n_2)
 {
-  IterativePair<int> p1;
-  IterativePair<int> p2;
-  std::vector<IterativePair<int> > main_chain;
-  std::vector<IterativePair<int>*> second_chain;
-  std::vector<IterativePair<int> >::iterator pos;
-
-  if (v[0].getPairs(p1, p2)) {
-    main_chain.push_back(p2);
-    main_chain.push_back(p1);
-  }
-  for (std::vector<IterativePair<int> >::iterator it = v.begin() + 1; it != v.end(); ++it)
-  {
-    if (it->getPairs(p1, p2)) {
-      main_chain.push_back(p1);
-      second_chain.push_back(new IterativePair<int>(p2));
-    }
-  }
-  if (second_chain.size())
-  {
-    for (size_t i = 0; (jacobsthal_diff[i] - 1) < second_chain.size(); i++) {
-      unsigned long j = jacobsthal_diff[i] - 1;
-      pos = binarySearch<IterativePair<int> >(main_chain.begin(), main_chain.end(), *second_chain[j]);
-      main_chain.insert(pos, *second_chain[j]);
-      second_chain[j] = NULL;
-    }
-    for (size_t i = 0; i < second_chain.size(); i++) {
-      if (second_chain[i] == NULL)
-        continue;
-      pos = binarySearch<IterativePair<int> >(main_chain.begin(), main_chain.end(), *second_chain[i]);
-      main_chain.insert(pos, *second_chain[i]);
-      second_chain[i] = NULL;
-    }
-  }
-  if (s != NULL)
-  {
-  if (s->getPairs(p1, p2)) {
-    pos = binarySearch<IterativePair<int> >(main_chain.begin(), main_chain.end(), p2);
-    main_chain.insert(pos, p2);
-    pos = binarySearch<IterativePair<int> >(main_chain.begin(), main_chain.end(), p1);
-    main_chain.insert(pos, p1);
-  }
-  else {
-    pos = binarySearch<IterativePair<int> >(main_chain.begin(), main_chain.end(), *s);
-    main_chain.insert(pos, *s);
-  }
-  }
-  return main_chain;
+  // Jacobsthal suite : t_n = t_n-1 + 2*t_n-2
+  return (Jacobsthal_n_1 + 2 * Jacobsthal_n_2);
 }
 
+std::vector <IterativePair<int> > insertPairs2(std::vector<IterativePair<int> > &v, IterativePair<int> *s)
+{
+		size_t J_upper = 1;
+		size_t J_lower = 1;
+		size_t tmp = J_lower;
+    IterativePair<int> p1;
+    IterativePair<int> p2;
+    std::vector<IterativePair<int> > main_chain;
+    std::vector<IterativePair<int> >::iterator pos;
+
+    //Insert First Pair with no Comparison
+    if (v[0].getPairs(p1, p2)) {
+      main_chain.push_back(p2);
+      main_chain.push_back(p1);
+    }
+
+    //Insert Pairs with Comparison
+    while (J_upper < v.size())
+    {
+      // set Jacobsthal values
+      tmp = J_lower;
+      J_lower = J_upper;
+      J_upper = std::min(Jacobsthal_n(J_lower, tmp), static_cast<int>(v.size()));
+
+      // Add all As to the main_chain
+      for (size_t i = J_lower; i < J_upper; i++)
+      {
+        if (v[i].getPairs(p1, p2)) {
+          main_chain.push_back(p1);
+        }
+      }
+      //Insert stray if there is one
+      // Then add all Bs to the main_chain with binarySearch
+      for (size_t i = J_lower; i < J_upper; i++)
+      {
+        if (v[i].getPairs(p1, p2)) {
+          pos = binarySearch<IterativePair<int> >(main_chain.begin(), main_chain.end(), p2);
+          main_chain.insert(pos, p2);
+        }
+      }
+    }
+    if (s != NULL)
+    {
+        pos = binarySearch<IterativePair<int> >(main_chain.begin(), main_chain.end(), *s);
+        main_chain.insert(pos, *s);
+      // }
+    }
+      return main_chain;
+}
+
+void cleanupDynamicPairs(std::vector<IterativePair<int> >& dynamicMemoryPairs) {
+  for (std::vector<IterativePair<int> >::iterator it = dynamicMemoryPairs.begin(); it != dynamicMemoryPairs.end(); ++it)
+  {
+    it->deleteP1();
+    it->deleteP2();
+  }
+  // dynamicMemoryPairs.clear();
+}
+
+void cleanStrays(std::vector<IterativePair<int>* >& strays) {
+  for (std::vector<IterativePair<int>* >::iterator it = strays.begin(); it != strays.end(); ++it)
+  {
+    if (*it != NULL)
+      delete *it;
+  }
+  // strays.clear();
+}
 
 void FordJohnsonSort(std::vector<int> &v)
 {
   std::vector<IterativePair<int> > pairs;
   std::vector<IterativePair<int> > tmp;
   std::vector<IterativePair<int>* > strays;
+  std::vector<IterativePair<int> > dynamicMemoryPairs;
+  IterativePair<int> p1;
 
+  std::cout << " Pairs at the beginning ---" << std::endl;
   for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
   {
     IterativePair<int> p(*it);
+    p.print();
     pairs.push_back(p);
   }
+  std::cout << std::endl << " --- Pairs at the beginning" << std::endl;
 
   size_t size = pairs.size();
   while (size != 1)
@@ -104,34 +128,75 @@ void FordJohnsonSort(std::vector<int> &v)
     for (size_t it = 0; it < (size - (size % 2)); it += 2) {
       IterativePair<int> p(pairs[it], pairs[it + 1]);
       tmp.push_back(p);
+      dynamicMemoryPairs.push_back(tmp.back());
     }
+    std::cout << "Pairs at the end of the loop ---" << std::endl;
+    for (std::vector<IterativePair<int> >::iterator it = tmp.begin(); it != tmp.end(); ++it)
+    {
+      it->print_all();
+      std::cout << " ";;
+    }
+    std::cout << "stray: ";
     if (size % 2) {
       IterativePair<int> *p = new IterativePair<int>(pairs[size - 1]);
       strays.push_back(p);
+      p->print_all();
     }
     else { strays.push_back(NULL); }
+    std::cout << std::endl << " --- Pairs at the end of the loop" << std::endl;
     pairs = tmp;
     tmp.clear();
     size = pairs.size();
   }
-  for (size_t i = 3; i > 0; i--)
+  p1 = pairs[0];
+  std::cout << std::endl << std::endl;
+  for (int i = strays.size() - 1; i >= 0; i--)
   {
     tmp.clear();
-    tmp = insertPairs(pairs, strays[i]);
+    std::cout << "I for strays is " << i << " sending stray: ";
+    if (strays[i] != NULL)
+    {
+      strays[i]->print_all();
+    }
+    else { std::cout << "NULL"; }
+    std::cout << std::endl;
+    tmp = insertPairs2(pairs, strays[i]);
     pairs = tmp;
+    std::cout << "Inserted Pairs ---" << std::endl;
+    for (std::vector<IterativePair<int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
+    {
+      it->print_all();
+      std::cout << " ";;
+    }
+    std::cout << std::endl << " --- Inserted Pairs" << std::endl; 
   }
+  std::cout << " Final Result " << std::endl;
     for (std::vector<IterativePair<int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
     {
       it->print_all();
       std::cout << std::endl;
     }
+    cleanupDynamicPairs(dynamicMemoryPairs);
+    cleanStrays(strays);
 }
 
-int main()
+int main(int ac, char *argv[])
 {
-  int arr[] = {7, 8, 5, 9, 11, 0, 2, 1, 10, 3, 4, 6};
-  std::vector<int> v;
-  v.insert(v.end(), arr, arr + sizeof(arr)/sizeof(arr[0]));
-  FordJohnsonSort(v);
+  ToolBox t;
+
+  try {
+    if (ac == 1)
+    {
+      throw ToolBox::ParsingErrorException();
+      return 0;
+    }
+    t.parse(ac, argv);
+  // int arr[] = {7, 8, 5, 9, 11, 0, 2, 1, 10, 3, 4, 6};
+  // std::vector<int> v;
+  // v.insert(v.end(), arr, arr + sizeof(arr)/sizeof(arr[0]));
+    FordJohnsonSort(t.vect);
+  } catch (ToolBox::ParsingErrorException &e) {
+    std::cerr << e.what() << std::endl;
+  } 
   return 0;
 }
