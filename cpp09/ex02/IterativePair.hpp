@@ -5,7 +5,6 @@
 #include <deque>
 #include <sstream>
 #include <ctime>
-#include <memory> // for std::auto_ptr
 
 template<typename V>
 class IterativePair 
@@ -79,6 +78,7 @@ class IterativePair
 class ToolBox : public std::exception {
   private:
     std::clock_t start_time;
+    double parsing_time;
 
   public:
     std::vector<int> vect;
@@ -99,7 +99,19 @@ class ToolBox : public std::exception {
 
     double elapsed(void)
     {
-      return (std::clock() - start_time) / (double) CLOCKS_PER_SEC;
+      return (std::clock() - start_time);
+    }
+
+    void setParseTime(double t)
+    {
+      parsing_time = t;
+    }
+
+    void	printDuration(std::clock_t time, std::string container, unsigned long range)
+    {
+      std::cout << "Time to process a range of " << range << " elements ";
+      std::cout << "with std::" << container << " : ";
+      std::cout << ((double) (time + parsing_time ) / (CLOCKS_PER_SEC / 1000000) ) << " us" << std::endl;
     }
 
     void parse(int ac, char **av)

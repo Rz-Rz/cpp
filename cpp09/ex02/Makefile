@@ -1,6 +1,10 @@
 # Compiler and flags
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -g3 -std=c++98 -MMD
+#Run debug with make DEBUG=1
+ifdef DEBUG
+CXXFLAGS += -DDEBUG
+endif
 
 # Test source files and target
 TEST_SRCS = test_pairs.cpp
