@@ -1,9 +1,10 @@
 #include "BitcoinExchange.hpp"
 #include <fstream>
 
-int main() {
-  BitcoinExchange exchange("data.csv");
-  exchange.load_csv();
-  exchange.load_psv("bitcoin.txt");
-  return 0;
+int main(int ac, char **argv) {
+	(void)ac;
+	BitcoinExchange exchange("data.csv");
+	exchange.load_csv();
+	exchange.load_psv(argv[1]);
+	return 0;
 }
