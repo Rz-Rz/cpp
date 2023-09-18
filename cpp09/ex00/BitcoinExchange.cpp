@@ -118,8 +118,8 @@ float BitcoinExchange::getValue(const std::string& date) {
   std::multimap<std::string, float>::iterator it = csv_data.lower_bound(date);
 
   // If the date is not found and it is not the first element, get the previous date
-  if (it == psv_data.end() || it->first != date) {
-    if (it == psv_data.begin()) {
+  if (it == csv_data.end() || it->first != date) {
+    if (it == csv_data.begin()) {
       // There is no lower date
       return it->second;
     } else {
