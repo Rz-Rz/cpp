@@ -7,6 +7,8 @@
 class BitcoinExchange {
   public:
     BitcoinExchange(const std::string& filename);
+	~BitcoinExchange();
+	BitcoinExchange(const BitcoinExchange& other);
     bool load_csv();
     bool load_psv(std::string filename);
     float getValue(const std::string& date);
@@ -17,6 +19,7 @@ class BitcoinExchange {
 
 
   private:
+	BitcoinExchange();
     std::string filename;
     std::multimap<std::string, float> csv_data;
     std::multimap<std::string, float> psv_data;

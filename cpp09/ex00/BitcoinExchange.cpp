@@ -8,6 +8,12 @@
 
 BitcoinExchange::BitcoinExchange(const std::string& filename) : filename(filename) {}
 
+BitcoinExchange::BitcoinExchange() {}
+
+BitcoinExchange::~BitcoinExchange() {}
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange& other) : filename(other.filename), csv_data(other.csv_data), psv_data(other.psv_data) {}
+
 std::string BitcoinExchange::trim(const std::string& str) {
     size_t first = str.find_first_not_of(' ');
     if (std::string::npos == first) {
@@ -16,7 +22,6 @@ std::string BitcoinExchange::trim(const std::string& str) {
     size_t last = str.find_last_not_of(' ');
     return str.substr(first, (last - first + 1));
 }
-#include <stdio.h>
 
 bool BitcoinExchange::load_psv(std::string filename) {
   std::ifstream file(filename.c_str());
