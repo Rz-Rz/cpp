@@ -30,6 +30,18 @@ class IterativePair
         std::swap(_p1, _p2);
     }
     IterativePair(const IterativePair<V> &p) : _value(p._value), _p1(p._p1), _p2(p._p2), _alone(p._alone), _hasDynamicMemory(false) {}
+	IterativePair<V> &operator=(const IterativePair<V> &p)
+	{
+	  if (this != &p)
+	  {
+		_value = p._value;
+		_p1 = p._p1;
+		_p2 = p._p2;
+		_alone = p._alone;
+		_hasDynamicMemory = p._hasDynamicMemory;
+	  }
+	  return *this;
+	}
     ~IterativePair(void) {}
     void deleteP1() { delete _p1; _p1 = NULL; }
     void deleteP2() { delete _p2; _p2 = NULL; }
@@ -85,7 +97,16 @@ class PmergeMe : public std::exception {
     std::deque<int> deq;
 
     PmergeMe(void) {};
+	PmergeMe(const PmergeMe &p) : vect(p.vect), deq(p.deq) {}
     ~PmergeMe(void) throw() {}
+	PmergeMe &operator=(const PmergeMe &p) {
+		if (this != &p)
+		{
+			vect = p.vect;
+			deq = p.deq;
+		}
+		return *this;
+	}
 
     void start(void)
     {
@@ -148,4 +169,3 @@ class PmergeMe : public std::exception {
       }
   };
 };
-
